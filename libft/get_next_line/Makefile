@@ -2,19 +2,14 @@ CC		= gcc
 
 CFLAGS	= -Wall -Wextra -Werror
 
-SRC		= ft_printf.c \
-		ft_print_c.c \
-		ft_print_s.c \
-		ft_print_d.c \
-		ft_print_hex.c \
-		ft_print_p.c \
-		ft_print_u.c
+SRC		= get_next_line.c \
+			get_next_line_utils.c
 
 OBJ		= $(SRC:.c=.o)
 
-NAME	= ft_printf.a
+NAME	= get_next_line.a
 
-DEPS	= ft_printf.h
+DEPS	= get_next_line.h
 
 RM		= rm -rf
 

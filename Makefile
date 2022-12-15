@@ -7,9 +7,9 @@ NAME   = fdf
 
 ### INCLUDES ###
 LIBFT  = libft
-OBJ_PATH  = objs
+OBJ_PATH  = ./src
 HEADER = incl
-SRC_PATH  = srcs
+SRC_PATH  = ./src
 MLX = libmlx
 
 ### SOURCE FILES ###

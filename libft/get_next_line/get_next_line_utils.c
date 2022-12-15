@@ -6,25 +6,14 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 12:48:55 by nrossel           #+#    #+#             */
-/*   Updated: 2022/12/13 17:59:30 by nrossel          ###   ########.fr       */
+/*   Updated: 2022/12/15 17:07:59 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-/*--------- 1. strlen -----------*/
-size_t	ft_strlen(char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
-
 /*--------- 3. strlcpy -----------*/
-size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+size_t	ft_strlcpy_gnl(char *dst, const char *src, size_t dstsize)
 {
 	size_t		src_len;
 	size_t		i;
@@ -48,7 +37,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 }
 
 /*--------- 3. strjoin -----------*/
-char	*ft_strjoin(char const *str1, char const *str2)
+char	*ft_strjoin_gnl(char const *str1, char const *str2)
 {
 	size_t		len_max;
 	size_t		i;
@@ -78,7 +67,7 @@ char	*ft_strjoin(char const *str1, char const *str2)
 }
 
 /*--------- 4. substr -----------*/
-char	*ft_substr(char const *str, unsigned int start, size_t len)
+char	*ft_substr_gnl(char const *str, unsigned int start, size_t len)
 {
 	size_t	i;
 	char	*new_str;
@@ -86,7 +75,7 @@ char	*ft_substr(char const *str, unsigned int start, size_t len)
 	if (!str)
 		return (NULL);
 	if (start > ft_strlen((char *)str))
-		return (ft_strdup(""));
+		return (ft_strdup_gnl(""));
 	if (len > (ft_strlen((char *)str + start)))
 		len = (ft_strlen((char *)str + start));
 	new_str = malloc((len + 1) * sizeof(char));
@@ -103,7 +92,7 @@ char	*ft_substr(char const *str, unsigned int start, size_t len)
 }
 
 /*---------------- 5. strdup ------------------*/
-char	*ft_strdup(const char *src)
+char	*ft_strdup_gnl(const char *src)
 {
 	int		i;
 	int		len;
@@ -115,7 +104,7 @@ char	*ft_strdup(const char *src)
 	dst = malloc(len * sizeof(char));
 	if (!dst)
 		return (NULL);
-	i = ft_strlcpy(dst, src, len);
+	i = ft_strlcpy_gnl(dst, src, len);
 	if (i == len)
 		return (dst);
 	return (NULL);
