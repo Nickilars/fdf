@@ -38,7 +38,7 @@ all :	$(NAME)
 		@echo "$(BLUE)Creating object file -> $(WHITE)$(notdir $@)... $(RED)[Done]$(NOC)"
 
 $(NAME) : $(OBJ)
-		ar -qc $(NAME) $(OBJ)
+		ar rc $(NAME) $(OBJ)
 		ranlib $(NAME)
 		@echo "$(GREEN)Project successfully compiled"
 

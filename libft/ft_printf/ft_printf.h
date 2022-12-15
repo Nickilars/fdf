@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 16:09:48 by nrossel           #+#    #+#             */
-/*   Updated: 2022/12/15 17:01:20 by nrossel          ###   ########.fr       */
+/*   Updated: 2022/12/15 18:19:39 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <stdarg.h>
 # include <unistd.h>
-# include "../libft/libft.h"
+# include "../libft.h"
 
 /*typedef struct t_input	t_input;
 struct  t_input

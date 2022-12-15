@@ -6,14 +6,14 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 09:40:15 by nrossel           #+#    #+#             */
-/*   Updated: 2022/12/15 17:11:09 by nrossel          ###   ########.fr       */
+/*   Updated: 2022/12/15 11:05:20 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
 /*---------------- 1. strchr ------------------*/
-int	ft_strchr_gnl(const char *str)
+int	ft_strchr1(const char *str)
 {
 	unsigned int	i;
 
@@ -38,10 +38,10 @@ void	ft_check_statik(char **dest, char *src, int c_read)
 		return ;
 	src[c_read] = '\0';
 	if (!*dest)
-		*dest = ft_substr_gnl(src, 0, c_read);
+		*dest = ft_substr(src, 0, c_read);
 	else
 	{
-		tmp = ft_strjoin_gnl(*dest, src);
+		tmp = ft_strjoin(*dest, src);
 		if (!tmp)
 		{
 			free(*dest);
@@ -65,11 +65,11 @@ char	*ft_returnline(char **statik, int c_read)
 		free(*statik);
 		return (NULL);
 	}
-	index = ft_strchr_gnl(*statik) + 1;
+	index = ft_strchr(*statik) + 1;
 	if (index == 0)
 		index = ft_strlen(*statik);
-	ret = ft_substr_gnl(*statik, 0, index);
-	tmp = ft_substr_gnl(*statik, index, (ft_strlen(*statik) - index));
+	ret = ft_substr(*statik, 0, index);
+	tmp = ft_substr(*statik, index, (ft_strlen(*statik) - index));
 	free(*statik);
 	if (c_read == 0 || *tmp == 0)
 	{
@@ -97,7 +97,7 @@ char	*get_next_line(int fd)
 	}
 	while (1)
 	{
-		c_found = ft_strchr_gnl(statik);
+		c_found = ft_strchr(statik);
 		if (c_found > -1)
 			break ;
 		c_read = read(fd, buffer, BUFFER_SIZE);
