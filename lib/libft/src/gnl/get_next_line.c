@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 09:40:15 by nrossel           #+#    #+#             */
-/*   Updated: 2022/12/15 19:31:38 by nrossel          ###   ########.fr       */
+/*   Updated: 2022/12/22 14:04:31 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ char	*get_next_line(int fd)
 	// char	*line;
 	// int		i = 1;
 // 
-	// while (i <= 18)
+	// while (av[i])
 	// {
 		// fd = open(av[i], O_RDONLY);
 		// while (1)
