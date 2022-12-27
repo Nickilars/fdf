@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:24:28 by nrossel           #+#    #+#             */
-/*   Updated: 2022/12/22 15:01:10 by nrossel          ###   ########.fr       */
+/*   Updated: 2022/12/27 14:29:46 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define	WHITE 0xFFFFFF
 # define	BLACK 0x000000
 
+/* --------------- draw pixel --------------------*/
 void	img_pix_put(t_img *img, int x, int y, int color)
 {
 	char	*pixel;
@@ -54,6 +55,11 @@ void draw_squares(t_img *img, int x1, int y1, int x2, int y2, int color)
 		y++;
 	}
 }
+
+// void draw_isosquare(t_img *img, int x1, int y1, int x2, int y2, int color)
+// {
+	// 
+// }
 
 /* --------------- draw a line --------------------*/
 void ft_draw_line(t_img *img, int x1, int y1, int x2, int y2, int color)
@@ -117,7 +123,7 @@ void	render_background(t_img *img, int color)
 		++i;
 	}
 }
-
+/* --------------- window design --------------------*/
 int	render(t_data *data)
 {
 	if (data->win_ptr == NULL)
@@ -125,11 +131,36 @@ int	render(t_data *data)
 	render_background(&data->img, BLACK);
 	render_rect(&data->img, (t_rect){0, 0, WINDOW_L, 50, RED});
 	render_rect(&data->img, (t_rect){0, WINDOW_H - 50, WINDOW_L, 50, RED});
-	draw_squares(&data->img, 0, 0, WINDOW_H, WINDOW_L, WHITE);
-	ft_draw_line(&data->img, 100, 100, 200, 200, GREEN);
+	draw_squares(&data->img, 200, 200, 700, 700, WHITE);
+	ft_draw_line(&data->img, 155, 150, 255, 250, GREEN);
 	ft_draw_line(&data->img, 200, 200, 100, 300, GREEN);
 
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
+	return (0);
+}
+
+/* --------------- Mouse event --------------------*/
+int	mouse_handle(int mousekey, int x, int y, t_data *data)
+{
+	(void) x;
+	(void) y;
+	(void) data;
+	if (mousekey == 1)
+		ft_printf("Left Click\n");
+	else if (mousekey == 2)
+		ft_printf("Right Click\n");
+	else if (mousekey == 3)
+		ft_printf("Middle Click\n");
+	else if (mousekey == 4)
+		ft_printf("Scroll UP\n");
+	else if (mousekey == 5)
+		ft_printf("Scroll DOWN\n");
+	else if (mousekey == 6)
+		ft_printf("Scroll right\n");
+	else if (mousekey == 7)
+		ft_printf("Scroll left\n");
+	else
+		ft_printf("%d\n", mousekey);
 	return (0);
 }
 
@@ -144,17 +175,19 @@ int	handle_keypress(int key, t_data *data)
 	printf("Keypress: %d\n", key);
 	return (0);
 }
-
+/* --------------- main --------------------*/
 int	main(int ac, char **av)
 {
+	t_data	data;
+	int **map;
+
 	if (ac > 2)
 	{
 		ft_printf("Erreur, trop d'arguments");
 		exit (0);
 	}
-	if (ac > 1)
-		ft_parse_map(av[1]);
-	t_data	data;
+	if (ac == 1 || ac == 0)
+		map = ft_parse_map(av[1]);
 
 	data.mlx_ptr = mlx_init();// initialisation de mlx
 	if (!data.mlx_ptr)
@@ -169,7 +202,8 @@ int	main(int ac, char **av)
 	data.img.mlx_img = mlx_new_image(data.mlx_ptr, WINDOW_L, WINDOW_H);//creation de la nouvelle image
 	data.img.addr = mlx_get_data_addr(data.img.mlx_img, &data.img.bpp, &data.img.line_len, &data.img.endian);//adresse de l'image
 	mlx_loop_hook(data.mlx_ptr, &render, &data);
-	mlx_key_hook(data.win_ptr, &handle_keypress, &data);//event "key_press"
+	mlx_hook(data.win_ptr,2, 1L << 0, &handle_keypress, &data);//event "key_press"
+	mlx_hook(data.win_ptr, 4, 0, mouse_handle, &data);// event "mouse_action"
 
 	mlx_loop(data.mlx_ptr);//loop gardant la fenetre ouverte
 
@@ -194,20 +228,49 @@ int	ft_count_char(char *str, char c)
 int	ft_free_funct(char *str1, char *str2, char *str3)
 {
 	free(str1);
-	free(str2);
+	if (str2 != NULL)
+		free(str2);
 	ft_printf("%s", str3);
 	exit (0);
 }
 
-int	ft_parse_map(char *map_file)
+int **ft_atoi_fdf(char **map)
 {
-	char **map;
+	int **tab_map = NULL;
+	char **cpy_map = NULL;
+	int i = 0;
+	int j;
+	int k;
+
+	while (map[i])
+	{
+		cpy_map = ft_split(map[i], ' ');
+		j = 0;
+		k = 0;
+		while (cpy_map[j])
+		{
+			tab_map[i][j] = ft_atoi(cpy_map[j]);
+			j++;
+		}
+		while(cpy_map[k])
+		{
+			free(cpy_map[k++]);
+		}
+		i++;
+	}
+	return (tab_map);
+}
+
+/* --------------- map_parsing --------------------*/
+int	**ft_parse_map(char *map_enter)
+{
 	char *line;
 	char *cpy_line;
-	int i = 0;
 	int fd;
+	char **map_exit = NULL;
+	int **map;
 
-	fd = open(map_file, O_RDONLY);
+	fd = open(map_enter, O_RDONLY);
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -227,17 +290,10 @@ int	ft_parse_map(char *map_file)
 		}
 		free (line);
 	}
-	map = ft_split(cpy_line, '\n');
-	if (!map)
-	{
-		free(cpy_line);
-		cpy_line = NULL;
-		ft_printf("Error split");
-		return (MLX_ERROR);
-	}
+	map_exit = ft_split(cpy_line, '\n');
+	if (!map_exit)
+		ft_free_funct(cpy_line, NULL, "Error split");
 	free (cpy_line);
-	while (map[i])
-		ft_printf("%s\n", map[i++]);
-	
-	return (0);
+	map = ft_atoi_fdf(map_exit)
+	return (map);
 }
