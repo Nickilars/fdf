@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:24:28 by nrossel           #+#    #+#             */
-/*   Updated: 2022/12/27 14:29:46 by nrossel          ###   ########.fr       */
+/*   Updated: 2022/12/28 15:29:04 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 # define	WINDOW_L 900
 # define	WINDOW_H 900
 # define 	WINDOW_NAME "fdf"
-# define	MLX_ERROR 1
+# define	ERROR 0
 # define	GREEN 0x0000FF00
 # define	RED 0x00960018
 # define	WHITE 0xFFFFFF
-# define	BLACK 0x000000
+# define	BLACj 0x000000
 
 /* --------------- draw pixel --------------------*/
 void	img_pix_put(t_img *img, int x, int y, int color)
@@ -42,13 +42,13 @@ void draw_squares(t_img *img, int x1, int y1, int x2, int y2, int color)
 	while (y <= y2)
 	{	
 		x = x1;
-		if (y % 50 == 0)
+		if (y % 5 == 0)
 			while (x <= x2)
 				img_pix_put(img, x++, y, color);
 		else
 			while (x <= x2)
 			{
-				if (x % 50 == 0)
+				if (x % 5 == 0)
 					img_pix_put(img, x, y, color);
 				x++;
 			}
@@ -127,8 +127,8 @@ void	render_background(t_img *img, int color)
 int	render(t_data *data)
 {
 	if (data->win_ptr == NULL)
-		return (MLX_ERROR);
-	render_background(&data->img, BLACK);
+		return (ERROR);
+	render_background(&data->img, BLACj);
 	render_rect(&data->img, (t_rect){0, 0, WINDOW_L, 50, RED});
 	render_rect(&data->img, (t_rect){0, WINDOW_H - 50, WINDOW_L, 50, RED});
 	draw_squares(&data->img, 200, 200, 700, 700, WHITE);
@@ -165,44 +165,50 @@ int	mouse_handle(int mousekey, int x, int y, t_data *data)
 }
 
 /* --------------- key event "esc to quit" --------------------*/
-int	handle_keypress(int key, t_data *data)
+int	handle_jeypress(int key, t_data *data)
 {
 	if (key == 53)
 	{
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		exit (0);
 	}
-	printf("Keypress: %d\n", key);
+	printf("keypress: %d\n", key);
 	return (0);
 }
-/* --------------- main --------------------*/
+
+/* ++++++++++++++++++++++++++++++ Main +++++++++++++++++++++++++++++++++++ */
 int	main(int ac, char **av)
 {
 	t_data	data;
-	int **map;
+	int fd;
 
 	if (ac > 2)
 	{
 		ft_printf("Erreur, trop d'arguments");
 		exit (0);
 	}
-	if (ac == 1 || ac == 0)
-		map = ft_parse_map(av[1]);
+	else if (ac == 2)
+	{
+		fd = open(av[1], O_RDONLY);
+		data.map.map = fdf_creat_map(fd, av[1], data.map);
+	}
+	else 
+	{
+		ft_printf("Erreur, aucuns arguments valide");
+		exit (0);
+	}
 
 	data.mlx_ptr = mlx_init();// initialisation de mlx
 	if (!data.mlx_ptr)
-		return (MLX_ERROR);
+		return (ERROR);
 	data.win_ptr = mlx_new_window(data.mlx_ptr, WINDOW_H, WINDOW_L, WINDOW_NAME);// creation de la fenetre
 	if (!data.win_ptr)
-	{
-		free(data.mlx_ptr);
-		return (MLX_ERROR);
-	}
+		ft_free_funct(data.mlx_ptr, NULL, "Error, no win_ptr");
 
 	data.img.mlx_img = mlx_new_image(data.mlx_ptr, WINDOW_L, WINDOW_H);//creation de la nouvelle image
 	data.img.addr = mlx_get_data_addr(data.img.mlx_img, &data.img.bpp, &data.img.line_len, &data.img.endian);//adresse de l'image
 	mlx_loop_hook(data.mlx_ptr, &render, &data);
-	mlx_hook(data.win_ptr,2, 1L << 0, &handle_keypress, &data);//event "key_press"
+	mlx_hook(data.win_ptr,2, 1L << 0, &handle_jeypress, &data);//event "jey_press"
 	mlx_hook(data.win_ptr, 4, 0, mouse_handle, &data);// event "mouse_action"
 
 	mlx_loop(data.mlx_ptr);//loop gardant la fenetre ouverte
@@ -224,76 +230,98 @@ int	ft_count_char(char *str, char c)
 	}
 	return (c_count);
 }
-
-int	ft_free_funct(char *str1, char *str2, char *str3)
+/* ------------------- free_function --------------------------- */
+int	ft_free_funct(char *ptr1, char *ptr2, char *ptr3)
 {
-	free(str1);
-	if (str2 != NULL)
+	free(ptr1);
+	if (ptr2 != NULL)
 		free(str2);
-	ft_printf("%s", str3);
+	ft_printf("%s", ptr3);
 	exit (0);
 }
 
-int **ft_atoi_fdf(char **map)
+int	ft_free_2dtab(char **tab)
 {
-	int **tab_map = NULL;
-	char **cpy_map = NULL;
-	int i = 0;
-	int j;
-	int k;
+	int i;
 
-	while (map[i])
-	{
-		cpy_map = ft_split(map[i], ' ');
-		j = 0;
-		k = 0;
-		while (cpy_map[j])
-		{
-			tab_map[i][j] = ft_atoi(cpy_map[j]);
-			j++;
-		}
-		while(cpy_map[k])
-		{
-			free(cpy_map[k++]);
-		}
-		i++;
-	}
-	return (tab_map);
+	if (!tab[0])
+		return (ERROR);
+	i = -1;
+	while (tab[++i])
+		free(tab[i]);
+	return (1);
 }
 
-/* --------------- map_parsing --------------------*/
-int	**ft_parse_map(char *map_enter)
+/* ++++++++++++++++++++++++++++++ Map_parsing +++++++++++++++++++++++++++++++++++ */
+/* --------------- Line_count --------------------*/
+int count_lines(int fd, t_point3d coord_y)
 {
-	char *line;
-	char *cpy_line;
-	int fd;
-	char **map_exit = NULL;
-	int **map;
+	int		nb_lines = 0;
+	char	*line;
 
-	fd = open(map_enter, O_RDONLY);
-	while (1)
+	if (fd = 0)
+		return (ERROR);
+	while(1)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
-			break ;
-		if (cpy_line == NULL)
-		{
-			cpy_line = ft_strdup(line);
-			if (cpy_line == NULL)		
-				ft_free_funct(cpy_line, line, "Error strdup");
-		}
-		else
-		{
-			cpy_line = ft_strjoin(cpy_line, line);
-			if (cpy_line == NULL)
-				ft_free_funct(cpy_line, line, "Error strjoin");
-		}
-		free (line);
+			break;
+		free(line);
+		nb_line++;
 	}
-	map_exit = ft_split(cpy_line, '\n');
-	if (!map_exit)
-		ft_free_funct(cpy_line, NULL, "Error split");
-	free (cpy_line);
-	map = ft_atoi_fdf(map_exit)
-	return (map);
+	close(fd);
+	coord_y.y = nb_line;
+	return (nb_line);
+}
+
+/* --------------- Parse_line --------------------*/
+int	fdf_parse_line(char *str, int index, t_coord map)
+{
+	char	**split;
+	int		i;
+
+	if(!str || index == 0)
+		return (ERROR);
+	split = ft_split(str, ' ');
+	if (!split)
+		return (ERROR);
+	i = 0;
+	while (split[i])
+		i++;
+	map.final.x = i;
+	map.map[index] = (int *)malloc((i + 1) * sizeof(int));
+	if (!map.map[index])
+		return (ERROR);
+	i = -1;
+	while (split[++i])
+		map.map[index][i] = ft_itoa(split[i]);
+	ft_free_2dtab(split);
+	return (1);
+}
+
+/* --------------- Creat_map --------------------*/
+int	fdf_creat_map(int fd,char *map_file, t_coord data_map)
+{
+	char	*line;
+	int		nb_line;
+	int		i;
+
+	nb_line = count_lines(fd, data_map.final)
+	data_map.map = (int**)malloc((nb_line + 1) * sizeof(int*));
+	if (!map)
+		return (ERROR);
+	data_map.map[nb_line] = NULL;
+	fd = open(map_file, O_RDONLY);
+	i = -1;
+	while (++i < nb_line && fd != 0)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break;
+		if (!fdf_parse_line(line, i, data_map.map))
+			return (ERROR);
+		free(line);
+		line = NULL;
+	}
+	return (1);
 }
