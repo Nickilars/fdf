@@ -1,36 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_s.c                                       :+:      :+:    :+:   */
+/*   ft_nbrlen_exa.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 10:58:34 by nrossel           #+#    #+#             */
-/*   Updated: 2022/12/30 08:27:56 by nrossel          ###   ########.fr       */
+/*   Created: 2022/12/30 08:39:47 by nrossel           #+#    #+#             */
+/*   Updated: 2022/12/30 09:05:33 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/ft_printf.h"
+#include "../include/libft.h"
 
-
-int	ft_print_s(const char *str)
+int	ft_nbrlen_exa(int nbr)
 {
 	int	i;
 
 	i = 0;
-	if (str == NULL)
+	while (nbr > 0)
 	{
-		i += ft_print_s("(null)");
-		return (i);
+		nbr /= 16;
+		i++;
 	}
-	while (str[i])
-		ft_print_c(str[i++]);
 	return (i);
 }
-
-/*int	main(int ac, char **av)
-{
-	(void) ac;
-	ft_putstr(av[1]);
-	return (0);
-}*/

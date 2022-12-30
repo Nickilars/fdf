@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_s.c                                       :+:      :+:    :+:   */
+/*   ft_free_arrays.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/14 10:58:34 by nrossel           #+#    #+#             */
-/*   Updated: 2022/12/30 08:27:56 by nrossel          ###   ########.fr       */
+/*   Created: 2022/12/30 08:54:29 by nrossel           #+#    #+#             */
+/*   Updated: 2022/12/30 10:18:33 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/ft_printf.h"
+#include "../include/libft.h"
 
-
-int	ft_print_s(const char *str)
+int	ft_free_arrays(char *str1, char *str2, char *error_msg)
 {
-	int	i;
-
-	i = 0;
-	if (str == NULL)
+	if (!str1 && !str2 && !error_msg)
+		return (0);
+	free(str1);
+	if (str2)
+		free(str2);
+	if (error_msg != NULL)
 	{
-		i += ft_print_s("(null)");
-		return (i);
+		ft_printf("%s", error_msg);
+		exit (0);
 	}
-	while (str[i])
-		ft_print_c(str[i++]);
-	return (i);
+	return (1);
 }
-
-/*int	main(int ac, char **av)
-{
-	(void) ac;
-	ft_putstr(av[1]);
-	return (0);
-}*/

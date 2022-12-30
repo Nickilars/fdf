@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:03:40 by nrossel           #+#    #+#             */
-/*   Updated: 2022/12/15 19:30:14 by nrossel          ###   ########.fr       */
+/*   Updated: 2022/12/30 08:25:02 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,24 @@
 
 int	ft_print_d(int nb)
 {
-	int		ret;
+	int		len;
 
-	ret = 0;
+	len = 0;
 	if (nb == -2147483648)
-		ret += ft_print_s("-2147483648");
+		len += ft_print_s("-2147483648");
 	else if (nb < 0)
 	{
-		ret += ft_print_c('-');
-		ret += ft_print_d(-nb);
+		len += ft_print_c('-');
+		len += ft_print_d(-nb);
 	}
 	else if (nb > 9)
 	{
-		ret += ft_print_d(nb / 10);
-		ret += ft_print_c((nb % 10) + '0');
+		len += ft_print_d(nb / 10);
+		len += ft_print_c((nb % 10) + '0');
 	}
 	else if (0 <= nb && nb < 10)
-		ret += ft_print_c(nb + '0');
-	return (ret);
+		len += ft_print_c(nb + '0');
+	return (len);
 }
 
 /*int	main()

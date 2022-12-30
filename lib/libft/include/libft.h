@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:04:11 by nrossel           #+#    #+#             */
-/*   Updated: 2022/12/15 19:24:30 by nrossel          ###   ########.fr       */
+/*   Updated: 2022/12/30 09:56:37 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,17 @@ int		ft_isdigit(int c);
 int		ft_isalnum(int c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);
+int		ft_islower(int c);
 int		ft_tolower(int c);
+int		ft_islower(int c);
 int		ft_toupper(int c);
+int		ft_nbrlen_d(int nbr);
+int		ft_nbrlen_exa(int nbr);
+int		ft_free_2da(char **tab, int len);
 int		ft_atoi(const char *str);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
+int		ft_free_arrays(char *str1, char *str2, char *error_msg);
 
 char	*ft_itoa(int n);
 char	*ft_strdup(const char *s1);

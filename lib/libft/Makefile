@@ -21,8 +21,14 @@ SRCS	= $(SRC_FOLDER)ft_isalpha.c \
 			$(SRC_FOLDER)ft_itoa.c \
 			$(SRC_FOLDER)ft_strdup.c \
 			$(SRC_FOLDER)ft_strchr.c \
+			$(SRC_FOLDER)ft_nbrlen_d.c \
+			$(SRC_FOLDER)ft_nbrlen_exa.c \
 			$(SRC_FOLDER)ft_strrchr.c \
 			$(SRC_FOLDER)ft_strlen.c \
+			$(SRC_FOLDER)ft_islower.c \
+			$(SRC_FOLDER)ft_isupper.c \
+			$(SRC_FOLDER)ft_free_2da.c \
+			$(SRC_FOLDER)ft_free_arrays.c \
 			$(SRC_FOLDER)ft_strlcpy.c \
 			$(SRC_FOLDER)ft_strlcat.c \
 			$(SRC_FOLDER)ft_split.c \

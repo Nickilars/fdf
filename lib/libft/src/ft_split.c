@@ -6,72 +6,11 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 10:29:27 by nrossel           #+#    #+#             */
-/*   Updated: 2022/12/15 19:27:30 by nrossel          ###   ########.fr       */
+/*   Updated: 2022/12/30 09:08:53 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
-
-/*----------- ------------------*/
-
-/*static int	len_tabstr(char *s, char c)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != c && s[i] != 0)
-		i++;
-	return (i);
-}
-
-static int	nb_char(const char *s, char c)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (s[i])
-	{
-		if (s[i] == c)
-			j++;
-		i++;
-	}
-	return (j);
-}
-
-char	**ft_split(char const *s, char c)
-{
-	int		i;
-	int		j;
-	int		k;
-	char	**tab;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	tab = malloc((nb_char(s, c) + 1) * sizeof(char *));
-	if (!tab || !s)
-		return (NULL);
-	tab[nb_char(s, c) + 1] = 0;
-	while (s[i])
-	{
-		if (i == 0 || k == 0)
-			tab[j] = malloc((len_tabstr((char *)&s[i], c) + 1) * sizeof(char));
-		if (s[i] == c)
-		{
-			tab[j][k] = 0;
-			j++;
-			k = 0;
-			i++;
-		}
-		else
-			tab[j][k++] = s[i++];
-	}
-	tab[j][k] = 0;
-	return (tab);
-}*/
-/*----------------------------------------*/
 
 static int	nb_char(const char *str, char c)
 {
