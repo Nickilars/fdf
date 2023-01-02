@@ -6,14 +6,18 @@ FLAGS  = -Wall -Wextra -Werror
 NAME   = fdf
 
 ### INCLUDES ###
-LIBFT  = libft
+LIBFT  = ./lib/libft/
 OBJ_PATH  = ./src
-HEADER = incl
+HEADER = ./include
 SRC_PATH  = ./src
-MLX = libmlx
+MLX = ./lib/minilibx/
 
 ### SOURCE FILES ###
-SOURCES = main.c
+SOURCES = main.c \
+			background.c \
+			event.c \
+			fdf_design.c \
+			map_parsing.c
 
 ### OBJECTS ###
 
@@ -43,7 +47,7 @@ lib:
 	@make -C $(MLX)
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) -L $(LIBFT) -L $(MLX) -o $@ $^ -lft -lmlx
+	$(CC) $(FLAGS) $(LIBFT) $(MLX) -o $@ $^
 	@echo "$(GREEN)Project successfully compiled"
 
 tmp:
