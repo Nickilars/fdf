@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:24:28 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/02 11:00:43 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/01/02 11:57:53 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ int	main(int ac, char **av)
 	data.img.mlx_img = mlx_new_image(data.mlx_ptr, WINDOW_L, WINDOW_H);//creation de la nouvelle image
 	data.img.addr = mlx_get_data_addr(data.img.mlx_img, &data.img.bpp, &data.img.line_len, &data.img.endian);//adresse de l'image
 	mlx_loop_hook(data.mlx_ptr, &render, &data);
-	mlx_hook(data.win_ptr,2, 1L << 0, &handle_jeypress, &data);//event "key_press"
-	mlx_hook(data.win_ptr, 4, 0, mouse_handle, &data);// event "mouse_action"
+	mlx_loop_hook(data.win_ptr, &handle_keypress, &data);//event "key_press"
+	mlx_loop_hook(data.win_ptr, mouse_handle, &data);// event "mouse_action"
 
 	mlx_loop(data.mlx_ptr);//loop gardant la fenetre ouverte
 

@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:04:11 by nrossel           #+#    #+#             */
-/*   Updated: 2022/12/30 09:56:37 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/01/10 11:01:53 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
+int		ft_btoi(int nbr);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_isalnum(int c);
@@ -35,10 +36,13 @@ int		ft_islower(int c);
 int		ft_tolower(int c);
 int		ft_islower(int c);
 int		ft_toupper(int c);
+int		ft_atob(char *str);
 int		ft_nbrlen_d(int nbr);
 int		ft_nbrlen_exa(int nbr);
-int		ft_free_2da(char **tab, int len);
 int		ft_atoi(const char *str);
+int		ft_nbrlen_b(unsigned int nbr);
+int		ft_free_2da(char **tab, int len);
+int		ft_power(int nbr, unsigned int power);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 int		ft_free_arrays(char *str1, char *str2, char *error_msg);

@@ -1,16 +1,17 @@
 ### COMPILATION ###
-CC      = gcc
-FLAGS  = -Wall -Wextra -Werror
+CC			= gcc
+FLAGS		= -Wall -Wextra -Werror
+FRAMEWORKS	= -framework OpenGL -framework AppKit
 
 ### EXECUTABLE ###
 NAME   = fdf
 
 ### INCLUDES ###
-LIBFT  = ./lib/libft/
-OBJ_PATH  = ./src
+LIBFT  = ./lib/libft
+OBJ_PATH  = ./objs
 HEADER = ./include
 SRC_PATH  = ./src
-MLX = ./lib/minilibx/
+MLX = ./lib/minilibx
 
 ### SOURCE FILES ###
 SOURCES = main.c \
@@ -43,11 +44,11 @@ all: lib tmp $(NAME)
 
 lib:
 	@echo "$(GREEN)Creating lib files$(CYAN)"
-	@make -C $(LIBFT)
-	@make -C $(MLX)
+	cd $(LIBFT) && $(MAKE) -C $(LIBFT)
+	cd $(MLX) && $(MAKE) -C $(MLX)
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) $(LIBFT) $(MLX) -o $@ $^
+	$(CC) $(FLAGS) -L$(LIBFT) -lft -L$(MLX) -llibmlx.a $(FRAMEWORKS) -o $(NAME)
 	@echo "$(GREEN)Project successfully compiled"
 
 tmp:

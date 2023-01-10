@@ -38,6 +38,10 @@ SRCS	= $(SRC_FOLDER)ft_isalpha.c \
 			$(SRC_FOLDER)ft_substr.c \
 			$(SRC_FOLDER)ft_strnstr.c \
 			$(SRC_FOLDER)ft_bzero.c \
+			$(SRC_FOLDER)ft_nbrlen_b.c \
+			$(SRC_FOLDER)ft_btoi.c \
+			$(SRC_FOLDER)ft_atob.c \
+			$(SRC_FOLDER)ft_power.c \
 			$(SRC_FOLDER)ft_putchar_fd.c \
 			$(SRC_FOLDER)ft_putstr_fd.c \
 			$(SRC_FOLDER)ft_putnbr_fd.c \
