@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 08:55:58 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/03 09:30:19 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/01/10 15:09:18 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int	ft_power(int nbr, unsigned int power)
 	else if (power == 1)
 		return (nb);
 	while (++i != power)
-		nb *= -nbr;
+		nb *= nbr;
+	if (nbr < 0)
+		nb = -nb;
 	return (nb);
 }
 

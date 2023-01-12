@@ -5,30 +5,31 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/10 14:47:27 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/10 15:22:55 by nrossel          ###   ########.fr       */
+/*   Created: 2023/01/03 08:25:33 by nrossel           #+#    #+#             */
+/*   Updated: 2023/01/10 14:45:24 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
-// #include <stdio.h>
+#include <stdio.h>
 
-int	ft_btoi(int binaire) //binaire to decimal conversion
+int	ft_itob(int nbr) //nbr max = 1023
 {
-	int		d = 0;
-	char	*b = ft_itoa(binaire);
-	int		power = ft_strlen(b) - 1;
-	int		i = 0;
+	unsigned long long	d = 0;
+	int			len = ft_nbrlen_b(nbr);
+	char		*b = NULL;
 
-	while (power >= 0)
+	b = (char *)malloc((len + 1) * sizeof(char));
+	if (!b)
+		return (0);
+	len--;
+	while(len >= 0)
 	{
-		if (b[power] == '1')
-		{
-			d += ft_power(2, i);
-		}
-		power--;
-		i++;
+		b[len] = (nbr % 2) + '0';
+		nbr /= 2;
+		len--;
 	}
+	d = ft_atoi(b);
 	free(b);
 	return (d);
 }

@@ -48,7 +48,7 @@ lib:
 	cd $(MLX) && $(MAKE) -C $(MLX)
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) -L$(LIBFT) -lft -L$(MLX) -llibmlx.a $(FRAMEWORKS) -o $(NAME)
+	$(CC) $(FLAGS) -L$(LIBFT) -lft -L$(MLX) -lminilibx $(FRAMEWORKS) -o $(NAME)
 	@echo "$(GREEN)Project successfully compiled"
 
 tmp:

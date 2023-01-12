@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 10:58:34 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/02 10:59:05 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/01/12 14:02:27 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	mouse_handle(int mousekey, int x, int y, t_data *data)
 }
 
 /* --------------- key event "esc to quit" --------------------*/
-int	handle_jeypress(int key, t_data *data)
+int	handle_keypress(int key, t_data *data)
 {
 	if (key == 53)
 	{

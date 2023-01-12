@@ -6,20 +6,20 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 11:00:15 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/02 11:00:33 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/01/12 13:38:07 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
 /* --------------- Line_count --------------------*/
-int count_lines(int fd, t_point3d *coord_y)
+int count_lines(int fd, char *map_file, t_point3d *coord_y)
 {
-	(void) coord_y;
 	int		nb_line = 0;
-	char	*line;
+	char	*line = NULL;
 
-	if (fd == 0)
+	fd = open(map_file, O_RDONLY);
+	if (fd <= 0 || !map_file)
 		return (ERROR);
 	while(1)
 	{
@@ -29,6 +29,7 @@ int count_lines(int fd, t_point3d *coord_y)
 		free(line);
 		nb_line++;
 	}
+	line = NULL;
 	close(fd);
 	coord_y->y = nb_line;
 	return (nb_line);
@@ -50,7 +51,7 @@ int	fdf_parse_line(char *str, int index, t_coord *map)
 	while (split[len])
 		len++;
 	len--;
-	map->final->x = len;
+	map->final.x = len;
 	map->map[index] = (int *)malloc((len) * sizeof(int));
 	if (!map->map[index])
 	{
@@ -67,15 +68,14 @@ int	fdf_parse_line(char *str, int index, t_coord *map)
 /* --------------- Creat_map --------------------*/
 int	fdf_creat_map(int fd,char *map_file, t_coord *data_map)
 {
-	char	*line;
+	char	*line = NULL;
 	int		nb_line;
 	int		i;
 
-	nb_line = count_lines(fd, data_map->final);
-	data_map->map = (int**)malloc((nb_line + 1) * sizeof(int*));
+	nb_line = count_lines(fd, map_file, &data_map->final);
+	data_map->map = (int **)malloc(nb_line * sizeof(int *));
 	if (!data_map->map)
 		return (ERROR);
-	data_map->map[nb_line] = NULL;
 	fd = open(map_file, O_RDONLY);
 	i = -1;
 	while (++i < nb_line && fd != 0)
@@ -88,5 +88,6 @@ int	fdf_creat_map(int fd,char *map_file, t_coord *data_map)
 		free(line);
 		line = NULL;
 	}
+	close(fd);
 	return (1);
 }

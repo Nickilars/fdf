@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:04:11 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/10 11:01:53 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/01/10 15:23:15 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-int		ft_btoi(int nbr);
+int		ft_itob(int nbr);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
 int		ft_isalnum(int c);
@@ -37,6 +37,7 @@ int		ft_tolower(int c);
 int		ft_islower(int c);
 int		ft_toupper(int c);
 int		ft_atob(char *str);
+int		ft_btoi(int binaire);
 int		ft_nbrlen_d(int nbr);
 int		ft_nbrlen_exa(int nbr);
 int		ft_atoi(const char *str);
