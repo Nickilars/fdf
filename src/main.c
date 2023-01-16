@@ -6,16 +6,11 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:24:28 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/12 14:34:22 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/01/16 15:33:30 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
-
-// void draw_isosquare(t_img *img, int x1, int y1, int x2, int y2, int color)
-// {
-	// 
-// }
 
 /* --------------- window design --------------------*/
 int	render(t_data *data)
@@ -25,9 +20,10 @@ int	render(t_data *data)
 	render_background(&data->img, BLACK);
 	render_rect(&data->img, (t_rect){0, 0, WINDOW_L, 50, RED});
 	render_rect(&data->img, (t_rect){0, WINDOW_H - 50, WINDOW_L, 50, RED});
-	//draw_squares(&data->img, 200, 200, data->map.final, WHITE);
-	//ft_draw_line(&data->img, 155, 150, 255, 250, GREEN);
+	//draw_squares(&data->img, (t_point2d){200, 200}, data->map.final, GREEN);
+	//ft_draw_line(&data->img, (t_point2d){200, 200}, data->map.final, GREEN);
 	//ft_draw_line(&data->img, 200, 200, 100, 300, GREEN);
+	ft_draw_iso(&data->img, (t_point2d){100, 100}, data->map.final, GREEN);
 
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
 	return (0);
