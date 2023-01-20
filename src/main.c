@@ -6,19 +6,17 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:24:28 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/20 11:13:35 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/01/20 16:19:04 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
 
-void ft_init(t_point2d *start, t_point2d *end)
+void ft_init(t_point2d *start)
 {
 	start->x = 200;
 	start->y = 200;
-	end->x = 600;
-	end->y = 600;
 }
 
 /* --------------- window design --------------------*/
@@ -45,7 +43,7 @@ int	main(int ac, char **av)
 	t_data	data;
 	int fd = 0;
 	
-	ft_init(&data.map.init, &data.map.final);
+	ft_init(&data.map.init);
 	if (ac > 2)
 	{
 		ft_printf("Erreur, trop d'arguments\n");

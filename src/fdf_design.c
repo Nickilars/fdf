@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 10:57:11 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/20 13:35:05 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/01/20 16:33:37 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	ft_delta(int x1, int y1, int x2, int y2, t_delta *delta)
 	float y;
 	float step;
 
-	x = end.x - start.x;
-	y = end.y - start.y;
+	x = x1 - x2;
+	y = y1 - y2;
 	if (fabs(y) >= fabs(x))
 		step = fabs(x);
 	else
@@ -67,24 +67,40 @@ void	img_pix_put(t_img *img, int x, int y, int color)
 // }
 
 /* --------------- draw a line --------------------*/
-void ft_draw_line(t_img *img, t_coord *start, int index_x, int index_y, int index_z, int color)
+void ft_draw_line(t_img *img, t_coord *start, int map_x, int map_y, int z, int color)
 {
 	float step;
-	int point_x;
-	int point_y;
+	float step_tmp;
+	int x;
+	int x_tmp;
+	int y;
 
-	point_x = start->init.x + (index_x * 25);
-	point_y = start->init.y + (index_y * 25);
-	start->init.x2 = point_x - 25;
-	start->init.y2 = point_y - (index_z * 25) 
-	step = ft_delta(point_x, point_y, start->init.x2, start->init.y2 )
-	
-	while (0 < step)
+	x = start->init.x + (map_x * 25);
+	x_tmp = x;
+	y = start->init.y + (map_y * 25);
+	if (map_x != 0)
+		start->init.x2 = x - 25;
+	else
+		start->init.x2 = start->init.x;
+	if (map_y != 0)
+		start->init.y2 = y - (z * 25);
+	else
+		start->init.y2 = start->init.x2;
+	step = ft_delta(x, y, start->init.x2, start->init.y2, &start->delta);
+	step_tmp = step;
+	while (0 < step_tmp)
 	{
-		img_pix_put(img, start.x, start.y, color);
-		start->init.x -= delta_x;
-		start->init.y -= delta_y;
-		step--;
+		img_pix_put(img, x, y, color);
+		x -= start->delta.x;
+		step_tmp--;
+	}
+	step_tmp = step;
+	x = x_tmp;
+	while(0 < step_tmp)
+	{
+		img_pix_put(img, x, y, color);
+		y -= start->delta.y;
+		step_tmp--;
 	}
 }
 // 
@@ -92,28 +108,24 @@ void ft_draw_line(t_img *img, t_coord *start, int index_x, int index_y, int inde
 void ft_draw_iso(t_img *img, t_coord *coord, int color)
 {
 	int x;
-	int y = 0;
-	int x_tmp = coord->init.x;
-	int y_tmp = coord->init.y;
+	int y = -1;
+	// int x_tmp = coord->init.x;
+	// int y_tmp = coord->init.y;
 	
-	while (y < coord.len.ligne)
+	while (++y < coord->len.ligne)
 	{
-		x = 0;
-		if (x < coord.len.colonne)
+		x = -1;
+		while (++x < coord->len.colonne)
 		{
-			if (coord->delta[i][j] > 0)
-				coord->len.z = coord->map[i][j];
+			//coord->len.z = coord->map[y][x];
 			if (x == 0 && y == 0)
 				x = 0;
 			else if (x == 0)
-				ft_draw_line(img, coord, x, y, coord.len.z, color);
+				ft_draw_line(img, coord, x, y, coord->len.z, color);
 			else if (y == 0)
-				ft_draw_line(img, coord, x, y, coord.len.z, color);
+				ft_draw_line(img, coord, x, y, coord->len.z, color);
 			else 
-			{
-				ft_draw_line(img, coord, x, y, coord.len.z, color);
-				ft_draw_line(img, coord, x, y, coord.len.z, color);
-			}
+				ft_draw_line(img, coord, x, y, coord->len.z, color);
 		}
 	}
 }

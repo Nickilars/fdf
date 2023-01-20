@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:42:44 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/20 13:10:15 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/01/20 16:33:39 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,10 @@ typedef struct s_data // Structure principal
 	t_coord		map;
 }	t_data;
 
+int		ft_delta(int x1, int y1, int x2, int y2, t_delta *delta);
 void	img_pix_put(t_img *img, int x, int y, int color);
-void	ft_draw_line(t_img *img, t_point2d start, t_point3d end, int color);
-void	ft_draw_iso(t_img *img, t_coord coord, int color);
+void	ft_draw_line(t_img *img, t_coord *start, int map_x, int map_y, int z, int color);
+void	ft_draw_iso(t_img *img, t_coord *coord, int color);
 
 int		render_rect(t_img *img, t_rect rect);
 void	render_background(t_img *img, int color);
