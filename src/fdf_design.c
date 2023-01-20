@@ -6,21 +6,19 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 10:57:11 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/16 15:33:55 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/01/20 13:35:05 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
-/* --------------- Calcule delta --------------------*/
-int	ft_delta(t_point2d start, t_point3d end, t_delta *delta)
+/* --------------- Calcul delta --------------------*/
+int	ft_delta(int x1, int y1, int x2, int y2, t_delta *delta)
 {
 	float x;
 	float y;
-
-	x = delta->x;
-	y = delta->y;
 	float step;
+
 	x = end.x - start.x;
 	y = end.y - start.y;
 	if (fabs(y) >= fabs(x))
@@ -45,12 +43,12 @@ void	img_pix_put(t_img *img, int x, int y, int color)
 }
 
 /* --------------- draw a square --------------------*/
-// void draw_squares(t_img *img, t_point2d start, t_point3d end, int color)
+// void draw_squares(t_img *img, t_point2d start, t_point3d len, int color)
 // {
 	// int x;
 	// int y = start.y;
-	// int	len_x = (50 * (end.x - 1)) + start.x;
-	// int	len_y = (50 * (end.y - 1)) + start.y;
+	// int	len_x = (50 * (len.x - 1)) + start.x;
+	// int	len_y = (50 * (len.y - 1)) + start.y;
 	// while (y <= len_y)
 	// {	
 		// x = start.x;
@@ -69,57 +67,53 @@ void	img_pix_put(t_img *img, int x, int y, int color)
 // }
 
 /* --------------- draw a line --------------------*/
-// void ft_draw_line(t_img *img, t_point2d start, t_point3d end, int color)
-// {
-	// float step;
-	// float delta_x;
-	// float delta_y;
-// 
-	// end.x = end.x * 50;
-	// end.y = end.y * 50;
-	// step = ft_delta(start, end, &end);
-	// 
-	// while (0 < step)
-	// {
-		// img_pix_put(img, start.x, start.y, color);
-		// start.x += delta_x;
-		// start.y += delta_y;
-		// step--;
-	// }
-// }
-
-/* ------------------------ draw iso -----------------------------*/
-void ft_draw_iso(t_img *img, t_point2d start, t_point3d end, int color)
+void ft_draw_line(t_img *img, t_coord *start, int index_x, int index_y, int index_z, int color)
 {
 	float step;
-	int x;
-	int y;
-	int len;
+	int point_x;
+	int point_y;
+
+	point_x = start->init.x + (index_x * 25);
+	point_y = start->init.y + (index_y * 25);
+	start->init.x2 = point_x - 25;
+	start->init.y2 = point_y - (index_z * 25) 
+	step = ft_delta(point_x, point_y, start->init.x2, start->init.y2 )
 	
-	len = 50;
-	x = start.x;
-	y = start.y;
-	step = ft_delta(start, end, &end.delta);
-	//if ((end.x + (end.delta.x * len)) >= WINDOW_H)
-		//len = 10;
-	end.x = end.x * len;
-	end.y = end.y * len;
-	while(y <= end.y)
+	while (0 < step)
 	{
-		x = start.x;
-		if (y % len == 0)
-			while(x <= end.x)
-				img_pix_put(img, x++, y, color);
-		else
+		img_pix_put(img, start.x, start.y, color);
+		start->init.x -= delta_x;
+		start->init.y -= delta_y;
+		step--;
+	}
+}
+// 
+/* ------------------------ draw iso -----------------------------*/
+void ft_draw_iso(t_img *img, t_coord *coord, int color)
+{
+	int x;
+	int y = 0;
+	int x_tmp = coord->init.x;
+	int y_tmp = coord->init.y;
+	
+	while (y < coord.len.ligne)
+	{
+		x = 0;
+		if (x < coord.len.colonne)
 		{
-			while (x <= end.x)
+			if (coord->delta[i][j] > 0)
+				coord->len.z = coord->map[i][j];
+			if (x == 0 && y == 0)
+				x = 0;
+			else if (x == 0)
+				ft_draw_line(img, coord, x, y, coord.len.z, color);
+			else if (y == 0)
+				ft_draw_line(img, coord, x, y, coord.len.z, color);
+			else 
 			{
-				img_pix_put(img, x, y, color);
-				x += len;
+				ft_draw_line(img, coord, x, y, coord.len.z, color);
+				ft_draw_line(img, coord, x, y, coord.len.z, color);
 			}
 		}
-		start.x += end.delta.x;
-		end.x += end.delta.x;
-		y += end.delta.x;
 	}
 }

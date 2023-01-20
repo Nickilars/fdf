@@ -6,15 +6,25 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:24:28 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/16 15:33:30 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/01/20 11:13:35 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
+
+void ft_init(t_point2d *start, t_point2d *end)
+{
+	start->x = 200;
+	start->y = 200;
+	end->x = 600;
+	end->y = 600;
+}
+
 /* --------------- window design --------------------*/
 int	render(t_data *data)
 {
+
 	if (data->win_ptr == NULL)
 		return (ERROR);
 	render_background(&data->img, BLACK);
@@ -23,7 +33,7 @@ int	render(t_data *data)
 	//draw_squares(&data->img, (t_point2d){200, 200}, data->map.final, GREEN);
 	//ft_draw_line(&data->img, (t_point2d){200, 200}, data->map.final, GREEN);
 	//ft_draw_line(&data->img, 200, 200, 100, 300, GREEN);
-	ft_draw_iso(&data->img, (t_point2d){100, 100}, data->map.final, GREEN);
+	ft_draw_iso(&data->img, &data->map, GREEN);
 
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
 	return (0);
@@ -34,7 +44,8 @@ int	main(int ac, char **av)
 {
 	t_data	data;
 	int fd = 0;
-
+	
+	ft_init(&data.map.init, &data.map.final);
 	if (ac > 2)
 	{
 		ft_printf("Erreur, trop d'arguments\n");

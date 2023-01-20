@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:42:44 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/16 15:31:33 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/01/20 13:10:15 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ typedef struct s_rect // Afficher les rectangles
 typedef struct s_point2d // Coordonées 2D
 {
 	int			x;
+	int			x2;
 	int			y;
+	int			y2;
 }	t_point2d ;
 
 typedef struct s_delta
@@ -61,16 +63,16 @@ typedef struct s_delta
 
 typedef struct s_point3d // Coordonées 3D
 {
-	int			x;
-	int			y;
+	int			ligne;
+	int			colonne;
 	int			z;
-	t_delta		delta;
 }	t_point3d;
 
 typedef struct s_coord // Coordonées de départ & de fin
 {
+	t_delta		delta;
 	t_point2d	init;
-	t_point3d	final;
+	t_point3d	len;
 	int			**map;
 }	t_coord;
 
@@ -85,7 +87,7 @@ typedef struct s_data // Structure principal
 
 void	img_pix_put(t_img *img, int x, int y, int color);
 void	ft_draw_line(t_img *img, t_point2d start, t_point3d end, int color);
-void	ft_draw_iso(t_img *img, t_point2d start, t_point3d end, int color);
+void	ft_draw_iso(t_img *img, t_coord coord, int color);
 
 int		render_rect(t_img *img, t_rect rect);
 void	render_background(t_img *img, int color);

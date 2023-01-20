@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 11:00:15 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/12 13:38:07 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/01/18 13:59:29 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int count_lines(int fd, char *map_file, t_point3d *coord_y)
 	}
 	line = NULL;
 	close(fd);
-	coord_y->y = nb_line;
+	coord_y->colonne = nb_line;
 	return (nb_line);
 }
 
@@ -51,7 +51,7 @@ int	fdf_parse_line(char *str, int index, t_coord *map)
 	while (split[len])
 		len++;
 	len--;
-	map->final.x = len;
+	map->len.ligne = len;
 	map->map[index] = (int *)malloc((len) * sizeof(int));
 	if (!map->map[index])
 	{
@@ -72,7 +72,7 @@ int	fdf_creat_map(int fd,char *map_file, t_coord *data_map)
 	int		nb_line;
 	int		i;
 
-	nb_line = count_lines(fd, map_file, &data_map->final);
+	nb_line = count_lines(fd, map_file, &data_map->len);
 	data_map->map = (int **)malloc(nb_line * sizeof(int *));
 	if (!data_map->map)
 		return (ERROR);
