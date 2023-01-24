@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 11:00:15 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/18 13:59:29 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/01/24 10:37:52 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	fdf_creat_map(int fd,char *map_file, t_coord *data_map)
 		return (ERROR);
 	fd = open(map_file, O_RDONLY);
 	i = -1;
-	while (++i < nb_line && fd != 0)
+	while (++i <= nb_line && fd != 0)
 	{
 		line = get_next_line(fd);
 		if (!line)
