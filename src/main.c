@@ -6,23 +6,23 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:24:28 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/20 16:19:04 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/01/24 08:58:51 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
 
-void ft_init(t_point2d *start)
+void ft_init(t_coord *start)
 {
-	start->x = 200;
-	start->y = 200;
+	start->init.x = 350;
+	start->init.y = 200;
+	start->len.len = 10;
 }
 
 /* --------------- window design --------------------*/
 int	render(t_data *data)
 {
-
 	if (data->win_ptr == NULL)
 		return (ERROR);
 	render_background(&data->img, BLACK);
@@ -43,7 +43,7 @@ int	main(int ac, char **av)
 	t_data	data;
 	int fd = 0;
 	
-	ft_init(&data.map.init);
+	ft_init(&data.map);
 	if (ac > 2)
 	{
 		ft_printf("Erreur, trop d'arguments\n");
@@ -57,7 +57,7 @@ int	main(int ac, char **av)
 		exit (0);
 	}
 	
-	// ft_printf("Y vaut %d et X vaut %d\n\n", data.map.final.y, data.map.final.x);
+	ft_printf("Y vaut %d et X vaut %d\n\n", data.map.len.colonne, data.map.len.ligne);
 	// int i = 0;
 	// int j;
 	// while (i < 10)
@@ -82,7 +82,7 @@ int	main(int ac, char **av)
 	data.img.addr = mlx_get_data_addr(data.img.mlx_img, &data.img.bpp, &data.img.line_len, &data.img.endian);//adresse de l'image
 	mlx_loop_hook(data.mlx_ptr, &render, &data);
 	mlx_key_hook(data.win_ptr, &handle_keypress, &data);//event "key_press"
-	mlx_mouse_hook(data.win_ptr, mouse_handle, &data);// event "mouse_action"
+	mlx_mouse_hook(data.win_ptr, &mouse_handle, &data);// event "mouse_action"
 
 	mlx_loop(data.mlx_ptr);//loop gardant la fenetre ouverte
 

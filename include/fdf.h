@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:42:44 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/20 16:33:39 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/01/24 09:04:08 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 # define	WINDOW_L 900
 # define	WINDOW_H 900
-# define 	WINDOW_NAME "fdf"
+# define	WINDOW_NAME "fdf"
 # define	ERROR 0
 # define	GREEN 0x7CFC00
 # define	RED 0x00960018
@@ -49,10 +49,12 @@ typedef struct s_rect // Afficher les rectangles
 
 typedef struct s_point2d // Coordonées 2D
 {
-	int			x;
-	int			x2;
-	int			y;
-	int			y2;
+	float			x;
+	float			x1;
+	float			x2;
+	float			y;
+	float			y1;
+	float			y2;
 }	t_point2d ;
 
 typedef struct s_delta
@@ -65,6 +67,7 @@ typedef struct s_point3d // Coordonées 3D
 {
 	int			ligne;
 	int			colonne;
+	int			len;
 	int			z;
 }	t_point3d;
 
@@ -72,6 +75,7 @@ typedef struct s_coord // Coordonées de départ & de fin
 {
 	t_delta		delta;
 	t_point2d	init;
+	t_point2d	point;
 	t_point3d	len;
 	int			**map;
 }	t_coord;
@@ -85,7 +89,7 @@ typedef struct s_data // Structure principal
 	t_coord		map;
 }	t_data;
 
-int		ft_delta(int x1, int y1, int x2, int y2, t_delta *delta);
+int		ft_delta(t_point2d *coord, t_delta *delta);
 void	img_pix_put(t_img *img, int x, int y, int color);
 void	ft_draw_line(t_img *img, t_coord *start, int map_x, int map_y, int z, int color);
 void	ft_draw_iso(t_img *img, t_coord *coord, int color);

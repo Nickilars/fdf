@@ -6,21 +6,21 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 10:57:11 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/20 16:33:37 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/01/24 09:04:09 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
 /* --------------- Calcul delta --------------------*/
-int	ft_delta(int x1, int y1, int x2, int y2, t_delta *delta)
+int	ft_delta(t_point2d *coord, t_delta *delta)
 {
 	float x;
 	float y;
 	float step;
 
-	x = x1 - x2;
-	y = y1 - y2;
+	x = coord->x2 - coord->x1;
+	y = coord->y2 - coord->y1;
 	if (fabs(y) >= fabs(x))
 		step = fabs(x);
 	else
@@ -67,65 +67,107 @@ void	img_pix_put(t_img *img, int x, int y, int color)
 // }
 
 /* --------------- draw a line --------------------*/
-void ft_draw_line(t_img *img, t_coord *start, int map_x, int map_y, int z, int color)
+void ft_draw_line_x(t_img *img, t_coord *start, int map_x, int color)
 {
 	float step;
-	float step_tmp;
-	int x;
-	int x_tmp;
-	int y;
+	int i;
 
-	x = start->init.x + (map_x * 25);
-	x_tmp = x;
-	y = start->init.y + (map_y * 25);
-	if (map_x != 0)
-		start->init.x2 = x - 25;
-	else
-		start->init.x2 = start->init.x;
-	if (map_y != 0)
-		start->init.y2 = y - (z * 25);
-	else
-		start->init.y2 = start->init.x2;
-	step = ft_delta(x, y, start->init.x2, start->init.y2, &start->delta);
-	step_tmp = step;
-	while (0 < step_tmp)
+	i = 0;
+	start->point.x1 = start->point.x + (map_x * start->len.len);
+	start->point.y1 = start->point.y + (map_x * (start->len.len / 2));
+	start->point.x2 = start->point.x1 - start->len.len;
+	start->point.y2 = start->point.y1 - (start->len.len / 2);
+	step = ft_delta(&start->point, &start->delta);
+	while (i < step)
 	{
-		img_pix_put(img, x, y, color);
-		x -= start->delta.x;
-		step_tmp--;
+		img_pix_put(img, start->point.x1, start->point.y1, color);
+		start->point.x1 += start->delta.x;
+		start->point.y1 += start->delta.y;
+		i++;
 	}
-	step_tmp = step;
-	x = x_tmp;
-	while(0 < step_tmp)
+	
+}
+
+void ft_draw_line_y(t_img *img, t_coord *start, int color)
+{
+	float step;
+	int i;
+
+	i = 0;
+	start->point.x1 = start->point.x;
+	start->point.y1 = start->point.y;
+	start->point.x2 = start->point.x1 + start->len.len;
+	start->point.y2 = start->point.y1 - (start->len.len / 2);
+	step = ft_delta(&start->point, &start->delta);
+	while (i < step)
 	{
-		img_pix_put(img, x, y, color);
-		y -= start->delta.y;
-		step_tmp--;
+		img_pix_put(img, start->point.x1, start->point.y1, color);
+		start->point.x1 += start->delta.x;
+		start->point.y1 -= start->delta.y;
+		i++;
 	}
 }
-// 
+
+void ft_draw_line_xy(t_img *img, t_coord *start, int map_x, int z, int color)
+{
+	float step;
+	(void) z;
+	int i;
+	
+	i = 0;
+	start->point.x1 = start->point.x + (map_x * start->len.len);
+	start->point.y1 = (start->point.y + (map_x * (start->len.len / 2))) /*+ (z * LEN)*/;
+	start->point.x2 = start->point.x1 + start->len.len;
+	start->point.y2 = (start->point.y1 - (start->len.len / 2)) /*- (z * LEN)*/;
+	step = ft_delta(&start->point, &start->delta);
+	while (i < step)
+	{
+		img_pix_put(img, start->point.x, start->point.y, color);
+		start->point.x1 += start->delta.x;
+		start->point.y1 += start->delta.y;
+		i++;
+	}
+	start->point.x1 = start->point.x + (map_x * start->len.len);
+	start->point.y1 = (start->point.y + (map_x * (start->len.len / 2))) /*+ (z * LEN)*/;
+	start->point.x2 = start->point.x1 - start->len.len;
+	start->point.y2 = (start->point.y1 - (start->len.len / 2)) /*- (z * LEN)*/;
+	step = ft_delta(&start->point, &start->delta);
+	i = 0;
+	while (i < step)
+	{
+		img_pix_put(img, start->point.x1, start->point.y1, color);
+		start->point.x1 += start->delta.x;
+		start->point.y1 += start->delta.y;
+		i++;
+	}
+}
+
 /* ------------------------ draw iso -----------------------------*/
 void ft_draw_iso(t_img *img, t_coord *coord, int color)
 {
 	int x;
-	int y = -1;
-	// int x_tmp = coord->init.x;
-	// int y_tmp = coord->init.y;
+	int y = 0;
 	
-	while (++y < coord->len.ligne)
+	coord->point.x = coord->init.x;
+	coord->point.y = coord->init.y;
+	while (y < coord->len.ligne)
 	{
-		x = -1;
-		while (++x < coord->len.colonne)
+		x = 0;
+		while (x < coord->len.colonne)
 		{
-			//coord->len.z = coord->map[y][x];
+			coord->len.z = coord->map[y][x];
 			if (x == 0 && y == 0)
 				x = 0;
-			else if (x == 0)
-				ft_draw_line(img, coord, x, y, coord->len.z, color);
 			else if (y == 0)
-				ft_draw_line(img, coord, x, y, coord->len.z, color);
-			else 
-				ft_draw_line(img, coord, x, y, coord->len.z, color);
+				ft_draw_line_x(img, coord, x, color);
+			else if (x == 0)
+				ft_draw_line_y(img, coord, color);
+			else
+				ft_draw_line_xy(img, coord, x, coord->len.z, color);
+			x++;
 		}
+		coord->point.x -= coord->len.len;
+		coord->point.y += coord->len.len / 2;
+		y++;
 	}
 }
