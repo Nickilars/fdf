@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 10:58:34 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/24 08:53:47 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/01/24 09:42:19 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,3 +63,5 @@ int	handle_keypress(int key, t_data *data)
 	printf("keypress: %d\n", key);
 	return (0);
 }
+
+//int	close_window(int mousekey, t_data *data)

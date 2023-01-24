@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 10:57:11 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/24 09:04:09 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/01/24 10:01:30 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 /* --------------- Calcul delta --------------------*/
 int	ft_delta(t_point2d *coord, t_delta *delta)
 {
-	float x;
-	float y;
+	float delta_x;
+	float delta_y;
 	float step;
 
-	x = coord->x2 - coord->x1;
-	y = coord->y2 - coord->y1;
-	if (fabs(y) >= fabs(x))
-		step = fabs(x);
+	delta_x = coord->x2 - coord->x1;
+	delta_y = coord->y2 - coord->y1;
+	if (fabs(delta_x) >= fabs(delta_y))
+		step = fabs(delta_x);
 	else
-		step = fabs(y);
-	delta->x = x / step;
-	delta->y = y / step;
+		step = fabs(delta_y);
+	delta->x = delta_x / step;
+	delta->y = delta_y / step;
 	return (step);
 }
 
@@ -67,7 +67,7 @@ void	img_pix_put(t_img *img, int x, int y, int color)
 // }
 
 /* --------------- draw a line --------------------*/
-void ft_draw_line_x(t_img *img, t_coord *start, int map_x, int color)
+void ft_draw_x_axe(t_img *img, t_coord *start, int map_x, int color)
 {
 	float step;
 	int i;
@@ -88,7 +88,7 @@ void ft_draw_line_x(t_img *img, t_coord *start, int map_x, int color)
 	
 }
 
-void ft_draw_line_y(t_img *img, t_coord *start, int color)
+void ft_draw_y_axe(t_img *img, t_coord *start, int color)
 {
 	float step;
 	int i;
@@ -103,12 +103,12 @@ void ft_draw_line_y(t_img *img, t_coord *start, int color)
 	{
 		img_pix_put(img, start->point.x1, start->point.y1, color);
 		start->point.x1 += start->delta.x;
-		start->point.y1 -= start->delta.y;
+		start->point.y1 += start->delta.y;
 		i++;
 	}
 }
 
-void ft_draw_line_xy(t_img *img, t_coord *start, int map_x, int z, int color)
+void ft_draw_xyz_axe(t_img *img, t_coord *start, int map_x, int z, int color)
 {
 	float step;
 	(void) z;
@@ -122,7 +122,7 @@ void ft_draw_line_xy(t_img *img, t_coord *start, int map_x, int z, int color)
 	step = ft_delta(&start->point, &start->delta);
 	while (i < step)
 	{
-		img_pix_put(img, start->point.x, start->point.y, color);
+		img_pix_put(img, start->point.x1, start->point.y1, color);
 		start->point.x1 += start->delta.x;
 		start->point.y1 += start->delta.y;
 		i++;
@@ -157,13 +157,13 @@ void ft_draw_iso(t_img *img, t_coord *coord, int color)
 		{
 			coord->len.z = coord->map[y][x];
 			if (x == 0 && y == 0)
-				x = 0;
+				img_pix_put(img, coord->init.x, coord->init.y, color);
 			else if (y == 0)
-				ft_draw_line_x(img, coord, x, color);
+				ft_draw_x_axe(img, coord, x, color);
 			else if (x == 0)
-				ft_draw_line_y(img, coord, color);
+				ft_draw_y_axe(img, coord, color);
 			else
-				ft_draw_line_xy(img, coord, x, coord->len.z, color);
+				ft_draw_xyz_axe(img, coord, x, coord->len.z, color);
 			x++;
 		}
 		coord->point.x -= coord->len.len;
