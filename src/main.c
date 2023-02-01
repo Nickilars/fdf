@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:24:28 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/24 12:53:40 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/02/01 09:40:15 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,19 +58,19 @@ int	main(int ac, char **av)
 	}
 	
 	ft_printf("Y vaut %d et X vaut %d\n\n", data.map.len.colonne, data.map.len.ligne);
-	int i = 0;
-	int j;
-	while (i < 10)
-	{
-		j = 0;
-		while (j < 10)
-		{
-			ft_printf("la Valeur de %d.%d = %d\n", i, j, data.map.map[i][j]);
-			j++;
-		}
-		ft_printf("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-\n");
-		i++;
-	}
+	// int i = 0;
+	// int j;
+	// while (i < 10)
+	// {
+		// j = 0;
+		// while (j < 10)
+		// {
+			// ft_printf("la Valeur de %d.%d = %d\n", i, j, data.map.map[i][j]);
+			// j++;
+		// }
+		// ft_printf("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-\n");
+		// i++;
+	// }
 	data.mlx_ptr = mlx_init();// initialisation de mlx
 	if (!data.mlx_ptr)
 		return (ERROR);
