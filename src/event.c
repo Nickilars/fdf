@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 10:58:34 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/24 12:46:23 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/02/02 13:41:49 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ int	mouse_handle(int mousekey, int x, int y, t_data *data)
 	else if (mousekey == 4)
 	{
 		ft_printf("Scroll UP\n");
-		data->map.len.len += 10;
+		data->map.zoom *= 10;
 	}
 	else if (mousekey == 5)
 	{
 		ft_printf("Scroll DOWN\n");
-		data->map.len.len -= 10;
+		data->map.zoom /= 10;
 	}
 	else if (mousekey == 6)
 		ft_printf("Scroll right\n");
@@ -51,15 +51,6 @@ int	handle_keypress(int key, t_data *data)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		exit (0);
 	}
-	else if (key == 126)
-		data->map.init.y -= 10;
-	else if (key == 125)
-		data->map.init.y += 10;
-	else if (key == 124)
-		data->map.init.x += 10;
-	else if (key == 123)
-		data->map.init.x -= 10;
-	
 	printf("keypress: %d\n", key);
 	return (0);
 }

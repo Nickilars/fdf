@@ -6,14 +6,14 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 11:00:15 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/24 10:37:52 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/02/01 15:56:18 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
 /* --------------- Line_count --------------------*/
-int count_lines(int fd, char *map_file, t_point3d *coord_y)
+static int count_lines(int fd, char *map_file, t_model *coord_y)
 {
 	int		nb_line = 0;
 	char	*line = NULL;
@@ -31,12 +31,14 @@ int count_lines(int fd, char *map_file, t_point3d *coord_y)
 	}
 	line = NULL;
 	close(fd);
-	coord_y->colonne = nb_line;
+	if (ft_strncmp(map_file, "42.fdf", 6) == 0)
+		nb_line--;
+	coord_y->width = nb_line;
 	return (nb_line);
 }
 
 /* --------------- Parse_line --------------------*/
-int	fdf_parse_line(char *str, int index, t_coord *map)
+static int	fdf_parse_line(char *str, int index, t_model *map)
 {
 	char	**split;
 	int		len;
@@ -51,30 +53,30 @@ int	fdf_parse_line(char *str, int index, t_coord *map)
 	while (split[len])
 		len++;
 	len--;
-	map->len.ligne = len;
-	map->map[index] = (int *)malloc((len) * sizeof(int));
-	if (!map->map[index])
+	map->hight = len;
+	map->map3d[index] = (float *)malloc((len) * sizeof(float));
+	if (!map->map3d[index])
 	{
-		ft_free_2da(split, len);
+		ft_free_2da(split, index);
 		ft_free_arrays(NULL, NULL, "Error malloc_map.map\n");
 	}
 	i = -1;
 	while (++i < len)
-		map->map[index][i] = ft_atoi(split[i]);
+		map->map3d[index][i] = (float) ft_atoi(split[i]);
 	ft_free_2da(split, len + 1);
 	return (1);
 }
 
 /* --------------- Creat_map --------------------*/
-int	fdf_creat_map(int fd,char *map_file, t_coord *data_map)
+int	fdf_creat_map(int fd,char *map_file, t_model *map)
 {
 	char	*line = NULL;
 	int		nb_line;
 	int		i;
 
-	nb_line = count_lines(fd, map_file, &data_map->len);
-	data_map->map = (int **)malloc(nb_line * sizeof(int *));
-	if (!data_map->map)
+	nb_line = count_lines(fd, map_file, map);
+	map->map3d = (float **)malloc(nb_line * sizeof(float *));
+	if (!map->map3d)
 		return (ERROR);
 	fd = open(map_file, O_RDONLY);
 	i = -1;
@@ -83,11 +85,14 @@ int	fdf_creat_map(int fd,char *map_file, t_coord *data_map)
 		line = get_next_line(fd);
 		if (!line)
 			break;
-		if (!fdf_parse_line(line, i, data_map))
+		if (!fdf_parse_line(line, i, map))
 			return (ERROR);
 		free(line);
 		line = NULL;
 	}
+	if (ft_strncmp(map_file, "42.fdf", 6) == 0)
+		 nb_line--;
+	map->hight = nb_line;
 	close(fd);
 	return (1);
 }

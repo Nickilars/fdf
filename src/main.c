@@ -6,18 +6,18 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:24:28 by nrossel           #+#    #+#             */
-/*   Updated: 2023/02/01 09:40:15 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/02/02 13:33:11 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
 
-void ft_init(t_coord *start)
+void ft_init(t_model *init)
 {
-	start->init.x = 350;
-	start->init.y = 200;
-	start->len.len = 10;
+	init->offset_x = WINDOW_WIDTH / 2;
+	init->offset_y = WINDOW_HIGHT / 2;
+	init->zoom = 1;
 }
 
 /* --------------- window design --------------------*/
@@ -25,13 +25,8 @@ int	render(t_data *data)
 {
 	if (data->win_ptr == NULL)
 		return (ERROR);
-	render_background(&data->img, BLACK);
-	render_rect(&data->img, (t_rect){0, 0, WINDOW_L, 50, RED});
-	render_rect(&data->img, (t_rect){0, WINDOW_H - 50, WINDOW_L, 50, RED});
-	//draw_squares(&data->img, (t_point2d){200, 200}, data->map.final, GREEN);
 	//ft_draw_line(&data->img, (t_point2d){200, 200}, data->map.final, GREEN);
 	//ft_draw_line(&data->img, 200, 200, 100, 300, GREEN);
-	ft_draw_iso(&data->img, &data->map, GREEN);
 
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
 	return (0);
@@ -57,30 +52,31 @@ int	main(int ac, char **av)
 		exit (0);
 	}
 	
-	ft_printf("Y vaut %d et X vaut %d\n\n", data.map.len.colonne, data.map.len.ligne);
+	// ft_printf("Y vaut %d et X vaut %d\n\n", data.map.hight, data.map.width);
 	// int i = 0;
 	// int j;
-	// while (i < 10)
+	// while (i < data.map.hight)
 	// {
 		// j = 0;
-		// while (j < 10)
+		// while (j < data.map.width)
 		// {
-			// ft_printf("la Valeur de %d.%d = %d\n", i, j, data.map.map[i][j]);
+			// printf("la Valeur de %d.%d = %f\n", i, j, data.map.map3d[i][j]);
 			// j++;
 		// }
 		// ft_printf("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-\n");
 		// i++;
 	// }
+	ft_3d_to_2d(&data.map);
 	data.mlx_ptr = mlx_init();// initialisation de mlx
 	if (!data.mlx_ptr)
 		return (ERROR);
-	data.win_ptr = mlx_new_window(data.mlx_ptr, WINDOW_H, WINDOW_L, WINDOW_NAME);// creation de la fenetre
+	data.win_ptr = mlx_new_window(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HIGHT, WINDOW_NAME);// creation de la fenetre
 	if (!data.win_ptr)
 		ft_free_arrays(data.mlx_ptr, NULL, "Error, no win_ptr\n");
 
-	data.img.mlx_img = mlx_new_image(data.mlx_ptr, WINDOW_L, WINDOW_H);//creation de la nouvelle image
+	data.img.mlx_img = mlx_new_image(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HIGHT);//creation de la nouvelle image
 	data.img.addr = mlx_get_data_addr(data.img.mlx_img, &data.img.bpp, &data.img.line_len, &data.img.endian);//adresse de l'image
-	mlx_loop_hook(data.mlx_ptr, &render, &data);
+	//mlx_loop_hook(data.mlx_ptr, &render, &data);
 	mlx_key_hook(data.win_ptr, &handle_keypress, &data);//event "key_press"
 	//mlx_hook(data.win_ptr, 17, 1L << 0, close_window, &data);
 	mlx_mouse_hook(data.win_ptr, &mouse_handle, &data);// event "mouse_action"

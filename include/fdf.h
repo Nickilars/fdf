@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:42:44 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/24 10:01:31 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/02/02 13:25:23 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # include "../lib/minilibx/mlx.h"//"minilibX"
 # include "../lib/libft/include/libft.h"
 
-# define	WINDOW_L 900
-# define	WINDOW_H 900
+# define	WINDOW_WIDTH 1200
+# define	WINDOW_HIGHT 900
 # define	WINDOW_NAME "fdf"
 # define	ERROR 0
 # define	GREEN 0x7CFC00
@@ -38,65 +38,52 @@ typedef struct s_img // Informations relatives à l'image
 	int			endian; // ?
 }	t_img;
 
-typedef struct s_rect // Afficher les rectangles
-{
-	int			x;
-	int			y;
-	int			lenght;
-	int			height;
-	int			color;
-}	t_rect;
-
-typedef struct s_point2d // Coordonées 2D
-{
-	float			x;
-	float			x1;
-	float			x2;
-	float			y;
-	float			y1;
-	float			y2;
-}	t_point2d ;
-
-typedef struct s_delta
+typedef struct s_point2d
 {
 	float		x;
 	float		y;
-} t_delta ;
-
-typedef struct s_point3d // Coordonées 3D
+	int			color;
+	// void		*next_x;
+	// void		*next_y;
+} t_point2d;
+typedef struct s_point3d
 {
-	int			ligne;
-	int			colonne;
-	int			len;
-	int			z;
-}	t_point3d;
+	float		x;
+	float		y;
+	float		z;
+	int			color;
+} t_point3d;
 
-typedef struct s_coord // Coordonées de départ & de fin
+typedef struct s_delta
 {
+	float		d_x;
+	float		d_y;
+} t_delta;
+
+typedef struct s_model // Coordonées de départ & de fin
+{
+	int			width;
+	int			hight;
+	float		**map3d;
+	t_point2d	**map2d;
+	int			offset_x;
+	int			offset_y;
+	float		zoom;
 	t_delta		delta;
-	t_point2d	init;
-	t_point2d	point;
-	t_point3d	len;
-	int			**map;
-}	t_coord;
+}	t_model;
 
 typedef struct s_data // Structure principal
 {
 	void		*mlx_ptr;
 	void		*win_ptr;
 	t_img		img;
-	t_rect		rect;
-	t_coord		map;
+	t_model		map;
 }	t_data;
 
-void	img_pix_put(t_img *img, int x, int y, int color);
-void	ft_draw_iso(t_img *img, t_coord *coord, int color);
+int		ft_delta(t_point2d **map, t_delta *d, int x, int y);
+void	ft_3d_to_2d(t_model *model);
 
-int		render_rect(t_img *img, t_rect rect);
-void	render_background(t_img *img, int color);
-void	draw_squares(t_img *img, t_point2d start, t_point3d end, int color);
-
-int		fdf_creat_map(int fd, char *map_file, t_coord *data_map);
+int		fdf_creat_map(int fd, char *map_file, t_model *map);
 
 int		handle_keypress(int key, t_data *data);
 int		mouse_handle(int mousekey, int x, int y, t_data *data);
