@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:42:44 by nrossel           #+#    #+#             */
-/*   Updated: 2023/02/02 13:25:23 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/02/10 15:47:47 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_model // Coordonées de départ & de fin
 	int			offset_x;
 	int			offset_y;
 	float		zoom;
+	int			len;
 	t_delta		delta;
 }	t_model;
 
@@ -80,12 +81,16 @@ typedef struct s_data // Structure principal
 	t_model		map;
 }	t_data;
 
-int		ft_delta(t_point2d **map, t_delta *d, int x, int y);
+void	ft_draw_line(t_img *img, t_model *model);
+void 	black_screen(t_img *img);
+void	img_pix_put(t_img *img, int x, int y, int color);
+
 void	ft_3d_to_2d(t_model *model);
 
 int		fdf_creat_map(int fd, char *map_file, t_model *map);
 
 int		handle_keypress(int key, t_data *data);
 int		mouse_handle(int mousekey, int x, int y, t_data *data);
+int		close_window(int keycode, t_data *data);
 
 #endif

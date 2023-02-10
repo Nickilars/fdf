@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 11:00:15 by nrossel           #+#    #+#             */
-/*   Updated: 2023/02/01 15:56:18 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/02/10 14:54:11 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ static int count_lines(int fd, char *map_file, t_model *coord_y)
 		nb_line++;
 	}
 	line = NULL;
+	// if (ft_strncmp(map_file, "../test_map/42.fdf", 14) == 0)
+		// nb_line--;
 	close(fd);
-	if (ft_strncmp(map_file, "42.fdf", 6) == 0)
-		nb_line--;
-	coord_y->width = nb_line;
+	coord_y->hight = nb_line;
 	return (nb_line);
 }
 
@@ -52,8 +52,8 @@ static int	fdf_parse_line(char *str, int index, t_model *map)
 	len = 0;
 	while (split[len])
 		len++;
-	len--;
-	map->hight = len;
+	//len--;
+	map->width = len;
 	map->map3d[index] = (float *)malloc((len) * sizeof(float));
 	if (!map->map3d[index])
 	{
@@ -80,7 +80,7 @@ int	fdf_creat_map(int fd,char *map_file, t_model *map)
 		return (ERROR);
 	fd = open(map_file, O_RDONLY);
 	i = -1;
-	while (++i <= nb_line && fd != 0)
+	while (++i < nb_line && fd != 0)
 	{
 		line = get_next_line(fd);
 		if (!line)
@@ -90,9 +90,6 @@ int	fdf_creat_map(int fd,char *map_file, t_model *map)
 		free(line);
 		line = NULL;
 	}
-	if (ft_strncmp(map_file, "42.fdf", 6) == 0)
-		 nb_line--;
-	map->hight = nb_line;
 	close(fd);
 	return (1);
 }
