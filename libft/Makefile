@@ -97,8 +97,6 @@ all :	$(NAME)
 $(NAME) : $(OBJS)
 		ar -rs $(NAME) $(OBJS)
 
-		$(MAKE) clean
-
 re : fclean $(NAME)
 
 clean :

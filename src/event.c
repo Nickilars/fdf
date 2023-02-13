@@ -6,16 +6,19 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 10:58:34 by nrossel           #+#    #+#             */
-/*   Updated: 2023/02/13 11:40:06 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/02/13 15:23:12 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
-static int ft_zoom(int key, t_model *map)
+static int	ft_zoom(int key, t_model *map)
 {
-	t_point2d p = {0, 0, GREEN};
-	
+	t_point2d	p;
+
+	p.x = 0;
+	p.y = 0;
+	p.color = GREEN;
 	while (p.y < map->hight)
 	{
 		p.x = 0;
@@ -51,12 +54,9 @@ int	mouse_handle(int mousekey, int x, int y, t_data *data)
 int	handle_keypress(int key, t_data *data)
 {
 	if (key == 53)
-	{
-		// mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		exit (0);
-	}
 	else if (key == 126)
-		data->map.offset_y += 20; 
+		data->map.offset_y += 20;
 	else if (key == 125)
 		data->map.offset_y -= 20;
 	else if (key == 123)
@@ -72,7 +72,5 @@ int	close_window(int key, t_data *data)
 {
 	(void) key;
 	(void) data;
-	// mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-	// ft_free_2da((char**)data->map.map3d, data->map.hight);
 	exit (0);
 }

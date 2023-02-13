@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 09:58:44 by nrossel           #+#    #+#             */
-/*   Updated: 2023/02/13 09:38:05 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/02/13 14:44:06 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 /* --------------- Calcul de l'angle --------------------*/
 static int	ft_delta(t_point2d s, t_point2d f, t_delta *d)
 {
-	float delta_x;
-	float delta_y;
-	float step;
+	float	delta_x;
+	float	delta_y;
+	float	step;
 
 	delta_x = f.x - s.x;
 	delta_y = f.y - s.y;
@@ -47,17 +47,17 @@ static void	draw_x(t_img *img, t_model *model, int x, int y)
 {
 	float		step;
 	int			i;
-	t_point2d	d; // point depart
-	t_point2d	f; // point final
-	
+	t_point2d	d;
+	t_point2d	f;
+
 	if (x > 0)
 	{
 		d.x = model->offset_x + ((x - y) * model->zoom);
 		d.y = model->offset_y + ((x + y) * (model->zoom / 2))
-		- (model->map3d[y][x] * model->zoom);
+			- (model->map3d[y][x] * model->zoom);
 		f.x = d.x - model->zoom;
-		f.y = ((d.y + (model->map3d[y][x] * model->zoom)) - (model->zoom / 2)) 
-		- (model->map3d[y][x - 1] * model->zoom);
+		f.y = ((d.y + (model->map3d[y][x] * model->zoom)) - (model->zoom / 2))
+			- (model->map3d[y][x - 1] * model->zoom);
 		step = ft_delta(d, f, &model->delta);
 		i = 0;
 		while (i < step)
@@ -81,11 +81,11 @@ static void	draw_y(t_img *img, t_model *model, int x, int y)
 	if (y > 0)
 	{
 		d.x = model->offset_x - ((y - x) * model->zoom);
-		d.y = model->offset_y + ((y + x) * (model->zoom / 2)) 
-		- (model->map3d[y][x] * model->zoom);
+		d.y = model->offset_y + ((y + x) * (model->zoom / 2))
+			- (model->map3d[y][x] * model->zoom);
 		f.x = d.x + model->zoom;
 		f.y = ((d.y + (model->map3d[y][x] * model->zoom)) - (model->zoom / 2))
-		- (model->map3d[y - 1][x] * model->zoom);
+			- (model->map3d[y - 1][x] * model->zoom);
 		step = ft_delta(d, f, &model->delta);
 		i = 0;
 		while (i < step)
@@ -98,21 +98,22 @@ static void	draw_y(t_img *img, t_model *model, int x, int y)
 	}
 }
 
-/* ++++++++++++++++++++++++++++++ Main fonction +++++++++++++++++++++++++++++++++++ */
+/* ++++++++++++++++++++++++ Main fonction +++++++++++++++++++++++++++ */
 void	ft_draw_line(t_img *img, t_model *model)
 {
-	int x;
-	int y = 0;
-	
+	int	x;
+	int	y;
+
 	black_screen(img);
+	y = 0;
 	while (y < model->hight)
 	{
 		x = 0;
 		while (x < model->width)
 		{
 			if (x == 0 && y == 0)
-				img_pix_put(img, model->offset_x, model->offset_y 
-				- (model->map3d[y][x] * model->zoom), RED);
+				img_pix_put(img, model->offset_x, model->offset_y
+					- (model->map3d[y][x] * model->zoom), RED);
 			else
 			{
 				draw_x(img, model, x, y);

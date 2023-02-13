@@ -6,32 +6,32 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 11:00:15 by nrossel           #+#    #+#             */
-/*   Updated: 2023/02/10 14:54:11 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/02/13 14:48:26 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
 /* --------------- Line_count --------------------*/
-static int count_lines(int fd, char *map_file, t_model *coord_y)
+static int	count_lines(int fd, char *map_file, t_model *coord_y)
 {
-	int		nb_line = 0;
-	char	*line = NULL;
+	int		nb_line;
+	char	*line;
 
+	nb_line = 0;
+	line = NULL;
 	fd = open(map_file, O_RDONLY);
 	if (fd <= 0 || !map_file)
 		return (ERROR);
-	while(1)
+	while (1)
 	{
 		line = get_next_line(fd);
 		if (line == NULL)
-			break;
+			break ;
 		free(line);
 		nb_line++;
 	}
 	line = NULL;
-	// if (ft_strncmp(map_file, "../test_map/42.fdf", 14) == 0)
-		// nb_line--;
 	close(fd);
 	coord_y->hight = nb_line;
 	return (nb_line);
@@ -44,7 +44,7 @@ static int	fdf_parse_line(char *str, int index, t_model *map)
 	int		len;
 	int		i;
 
-	if(!str)
+	if (!str)
 		return (ERROR);
 	split = ft_split(str, ' ');
 	if (!split)
@@ -52,7 +52,6 @@ static int	fdf_parse_line(char *str, int index, t_model *map)
 	len = 0;
 	while (split[len])
 		len++;
-	//len--;
 	map->width = len;
 	map->map3d[index] = (float *)malloc((len) * sizeof(float));
 	if (!map->map3d[index])
@@ -68,9 +67,9 @@ static int	fdf_parse_line(char *str, int index, t_model *map)
 }
 
 /* --------------- Creat_map --------------------*/
-int	fdf_creat_map(int fd,char *map_file, t_model *map)
+int	fdf_creat_map(int fd, char *map_file, t_model *map)
 {
-	char	*line = NULL;
+	char	*line;
 	int		nb_line;
 	int		i;
 
@@ -84,7 +83,7 @@ int	fdf_creat_map(int fd,char *map_file, t_model *map)
 	{
 		line = get_next_line(fd);
 		if (!line)
-			break;
+			break ;
 		if (!fdf_parse_line(line, i, map))
 			return (ERROR);
 		free(line);
