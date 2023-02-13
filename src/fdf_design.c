@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf_design_bis.c                                   :+:      :+:    :+:   */
+/*   fdf_design.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/09 09:58:44 by nrossel           #+#    #+#             */
-/*   Updated: 2023/02/10 14:16:33 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/02/13 09:38:05 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fdf.h"
 
+/* --------------- Calcul de l'angle --------------------*/
 static int	ft_delta(t_point2d s, t_point2d f, t_delta *d)
 {
 	float delta_x;
@@ -41,6 +42,7 @@ void	img_pix_put(t_img *img, int x, int y, int color)
 	}
 }
 
+/* --------------- Axe X --------------------*/
 static void	draw_x(t_img *img, t_model *model, int x, int y)
 {
 	float		step;
@@ -68,6 +70,7 @@ static void	draw_x(t_img *img, t_model *model, int x, int y)
 	}
 }
 
+/* --------------- Axe Y --------------------*/
 static void	draw_y(t_img *img, t_model *model, int x, int y)
 {
 	float		step;
@@ -95,7 +98,7 @@ static void	draw_y(t_img *img, t_model *model, int x, int y)
 	}
 }
 
-// 
+/* ++++++++++++++++++++++++++++++ Main fonction +++++++++++++++++++++++++++++++++++ */
 void	ft_draw_line(t_img *img, t_model *model)
 {
 	int x;

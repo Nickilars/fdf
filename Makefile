@@ -7,18 +7,19 @@ FRAMEWORKS	= -framework OpenGL -framework AppKit
 NAME   = fdf
 
 ### INCLUDES ###
-LIBFT  = ./lib/libft
 OBJ_PATH  = ./objs
 HEADER = ./include
 SRC_PATH  = ./src
-MLX = ./lib/minilibx
+LIBFT  = libft
+MLX  = libmlx
 
 ### SOURCE FILES ###
 SOURCES = main.c \
-			background.c \
+			utils.c \
 			event.c \
 			fdf_design.c \
-			map_parsing.c
+			map_parsing.c \
+			main.c
 
 ### OBJECTS ###
 
@@ -44,11 +45,11 @@ all: lib tmp $(NAME)
 
 lib:
 	@echo "$(GREEN)Creating lib files$(CYAN)"
-	cd $(LIBFT) && $(MAKE) -C $(LIBFT)
-	cd $(MLX) && $(MAKE) -C $(MLX)
+	@make -C $(LIBFT)
+	@make -C $(MLX)
 
 $(NAME): $(OBJS)
-	$(CC) $(FLAGS) -L$(LIBFT) -lft -L$(MLX) -lminilibx $(FRAMEWORKS) -o $(NAME)
+	$(CC) $(FLAGS) -L$(LIBFT) -lft -L$(MLX) -lmlx $(FRAMEWORKS) -o $(NAME)
 	@echo "$(GREEN)Project successfully compiled"
 
 tmp:

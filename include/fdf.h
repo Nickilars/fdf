@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:42:44 by nrossel           #+#    #+#             */
-/*   Updated: 2023/02/10 15:47:47 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/02/13 11:14:35 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include <stdlib.h>//"exit", 
 # include <math.h>//"math function"
 
-# include "../lib/minilibx/mlx.h"//"minilibX"
-# include "../lib/libft/include/libft.h"
+# include "../libmlx/mlx.h"//"minilibX"
+# include "../libft/include/libft.h"
 
 # define	WINDOW_WIDTH 1200
 # define	WINDOW_HIGHT 900
@@ -65,7 +65,7 @@ typedef struct s_model // Coordonées de départ & de fin
 	int			width;
 	int			hight;
 	float		**map3d;
-	t_point2d	**map2d;
+	//t_point2d	**map2d;
 	int			offset_x;
 	int			offset_y;
 	float		zoom;
