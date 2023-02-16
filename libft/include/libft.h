@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 16:04:11 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/10 15:23:15 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/02/16 10:38:11 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int		ft_nbrlen_d(int nbr);
 int		ft_nbrlen_exa(int nbr);
 int		ft_atoi(const char *str);
 int		ft_nbrlen_b(unsigned int nbr);
-int		ft_free_2da(char **tab, int len);
+int		ft_free_2da(char **tab, char *error_msg);
 int		ft_power(int nbr, unsigned int power);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);

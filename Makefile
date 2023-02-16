@@ -76,7 +76,7 @@
 # .PHONY: temporary, re, fclean, clean
 
 CC			= gcc
-FLAGS		= -Wall -Wextra -Werror -o3 -g3
+CFLAGS		= -Wall -Wextra -Werror -o3 -g3
 LIBFT		= -L./libft -lft
 # MLXLIB		= -I ./minilibx -L ./minilibx -lmlx 
 FRAMEWORK	= -framework OpenGL -framework AppKit
@@ -103,22 +103,25 @@ _END	=	\e[0m
 			@printf "FDF object : $(_BLUE)%-33.33s\r$(_END)" $@
 			@${CC} ${CFLAGS} $(INCLUDES) -c $< -o $@
 
-$(NAME):	$(OBJS)
-			@$(MAKE) -C ./libft
+$(NAME):	$(OBJS) libft/libft.a
 			@$(MAKE) -C ./minilibx
 			mv ./minilibx/libmlx.dylib .
 			@printf "\nfdf objects	[$(_BLUE)✓$(_END)]\n"
-			@gcc $(FLAGS) $(OBJS) libmlx.dylib $(INCLUDES) $(LIBFT)  -o $(NAME) $(FRAMEWORK)
+			@gcc $(CFLAGS) $(OBJS) libmlx.dylib $(INCLUDES) $(LIBFT)  -o $(NAME) $(FRAMEWORK)
 			@printf "fdf		[$(_BLUE)✓$(_END)]\n"
+
+libft/libft.a : 
+			@$(MAKE) -C ./libft
 
 all : 		$(NAME)
 
-re:			clean
+re:			fclean
 			$(MAKE) $(NAME)
 
 clean :
-			@rm -rf $(OBJS) $(NAME)
-			@rm ./libmlx.dylib
+			@rm -rf $(OBJS)
+			@rm -f ./libmlx.dylib
+			$(MAKE) clean -C ./libft
 			@printf "$(_PURPLE)FDF object	deleted$(_END)\n"
 
 fclean :	clean
@@ -127,4 +130,6 @@ fclean :	clean
 			@rm -rf $(NAME)
 			@printf "$(_PURPLE)fdf		deleted$(_END)\n"
 
+leaks :		all
+			leaks --atExit -- ./$(NAME) ./test_map/42.fdf
 PHONY : re all clean fclean

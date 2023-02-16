@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 10:24:28 by nrossel           #+#    #+#             */
-/*   Updated: 2023/02/13 14:46:26 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/02/16 08:53:37 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,7 @@ int	main(int ac, char **av)
 	if (ac == 2)
 		fdf_creat_map(fd, av[1], &data.map);
 	else
-	{
-		ft_printf("Erreur, arguments valide\n");
-		exit (0);
-	}
+		ft_free_arrays(NULL, NULL, "Erreur,[1] argument invalide\n");
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
 		return (ERROR);

@@ -1,6 +1,6 @@
 CC		= gcc
 
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror -g
 
 SRC_FOLDER	= ./src/
 
@@ -100,7 +100,7 @@ $(NAME) : $(OBJS)
 re : fclean $(NAME)
 
 clean :
-		$(RM) *.o $(SRC_FOLDER)*.o $(GNL_SRC_FOLDER)*.o $(PRINTF_SRC_FOLDER)*.o
+		$(RM) $(OBJS)
 
 fclean : clean
 		$(RM) $(NAME)
