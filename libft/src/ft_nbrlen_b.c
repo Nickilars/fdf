@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 08:38:13 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/03 09:39:54 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/02/17 09:07:11 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 int	ft_nbrlen_b(unsigned int nbr)
 {
-	int	i = 0;
+	int	i;
 
+	i = 0;
 	while (nbr > 0)
 	{
 		nbr /= 2;

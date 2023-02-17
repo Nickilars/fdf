@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 08:24:52 by nrossel           #+#    #+#             */
-/*   Updated: 2023/01/03 10:39:21 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/02/17 09:00:43 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,15 @@
 
 int	ft_atob(char *str)
 {
-	int decimal = ft_atoi(str);
-	int len = ft_nbrlen_b(decimal);
-	int bin = 0;
-	char *bin_str = NULL;
-	
+	int		decimal;
+	int		len;
+	int		bin;
+	char	*bin_str;
+
+	decimal = ft_atoi(str);
+	len = ft_nbrlen_b(decimal);
+	bin = 0;
+	bin_str = NULL;
 	bin_str = malloc((len + 1) * sizeof(char));
 	if (!bin_str)
 		return (0);

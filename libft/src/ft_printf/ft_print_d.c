@@ -6,12 +6,11 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 11:03:40 by nrossel           #+#    #+#             */
-/*   Updated: 2022/12/30 08:25:02 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/02/17 10:06:57 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ft_printf.h"
-
 
 int	ft_print_d(int nb)
 {

@@ -6,12 +6,11 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 15:05:04 by nrossel           #+#    #+#             */
-/*   Updated: 2022/12/15 19:28:40 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/02/17 10:06:16 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
-
 
 static int	isset(char c, char const *set)
 {

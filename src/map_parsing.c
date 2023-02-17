@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 11:00:15 by nrossel           #+#    #+#             */
-/*   Updated: 2023/02/16 11:28:53 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/02/17 10:16:08 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ static int	fdf_parse_line(char *str, int index, t_model *map)
 	map->width = len;
 	map->map3d[index] = (float *)malloc((len) * sizeof(float));
 	if (!map->map3d[index])
-		ft_free_2da(split, "Erreur,[6] malloc_map.map\n");
+		ft_free_2da(split, len, "Erreur,[6] malloc_map.map\n");
 	i = -1;
 	while (++i < len)
 		map->map3d[index][i] = (float) ft_atoi(split[i]);
-	ft_free_2da(split, NULL);
+	ft_free_2da(split, len, NULL);
 	return (1);
 }
 

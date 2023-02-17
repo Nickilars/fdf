@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
+/*   ft_dlst_addback.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/07 17:28:20 by nrossel           #+#    #+#             */
-/*   Updated: 2022/12/15 19:26:08 by nrossel          ###   ########.fr       */
+/*   Created: 2023/02/14 11:05:14 by nrossel           #+#    #+#             */
+/*   Updated: 2023/02/14 11:12:20 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-void	ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_dlst_addback(t_dlist *lst, t_node *new)
 {
-	t_list	*ptr;
-
-	ptr = *lst;
-	if (!*lst)
-		return ;
-	while (*lst != NULL)
+	if (!new)
+		returtn (NULL);
+	if (!lst)
 	{
-		ptr = (*lst)->next;
-		ft_lstdelone(*lst, del);
-		*lst = ptr;
+		lst->head = new;
+		lst->tail = new;
+		lst->len++;
+		return ;
 	}
-	*lst = 0;
+	else
+	{
+		lst->tail->next = new;
+		new->prev = lst->tail;
+		lst->tail = new;
+		lst->len++;
+	}
 }

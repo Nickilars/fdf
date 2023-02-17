@@ -1,44 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_power.c                                         :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/03 08:55:58 by nrossel           #+#    #+#             */
-/*   Updated: 2023/02/17 09:37:59 by nrossel          ###   ########.fr       */
+/*   Created: 2022/11/07 17:55:13 by nrossel           #+#    #+#             */
+/*   Updated: 2023/02/14 09:49:14 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-int	ft_power(int nbr, unsigned int power)
+void	ft_lstiter(t_list *lst, void (*f)(void *))
 {
-	unsigned int	i;
-	long long		nb;
-
-	i = 0;
-	nb = (long long)nbr;
-	if (power == 0)
+	if (!lst || !f)
+		return ;
+	while (lst != NULL)
 	{
-		if (nb < 0)
-			return (-1);
-		else
-			return (1);
+		f(lst->content);
+		lst = lst->next;
 	}
-	else if (power == 1)
-		return (nb);
-	while (++i != power)
-		nb *= nbr;
-	if (nbr < 0)
-		nb = -nb;
-	return (nb);
 }
-
-// int main (int ac, char **av)
-// {
-	// (void) ac;
-	// int nbr = ft_power(atoi(av[1]), atoi(av[2]));
-	// ft_printf("%d", nbr);
-	// 
-// }

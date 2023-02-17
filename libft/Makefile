@@ -53,14 +53,14 @@ SRCS	= $(SRC_FOLDER)ft_isalpha.c \
 			$(SRC_FOLDER)ft_memcpy.c \
 			$(SRC_FOLDER)ft_memmove.c \
 			$(SRC_FOLDER)ft_striteri.c \
-			$(SRC_FOLDER)ft_lstnew_bonus.c \
-			$(SRC_FOLDER)ft_lstadd_front_bonus.c \
-			$(SRC_FOLDER)ft_lstsize_bonus.c \
-			$(SRC_FOLDER)ft_lstlast_bonus.c \
-			$(SRC_FOLDER)ft_lstadd_back_bonus.c \
-			$(SRC_FOLDER)ft_lstdelone_bonus.c \
-			$(SRC_FOLDER)ft_lstclear_bonus.c \
-			$(SRC_FOLDER)ft_lstiter_bonus.c
+			$(SRC_FOLDER)ft_lstnew.c \
+			$(SRC_FOLDER)ft_lstadd_front.c \
+			$(SRC_FOLDER)ft_lstsize.c \
+			$(SRC_FOLDER)ft_lstlast.c \
+			$(SRC_FOLDER)ft_lstadd_back.c \
+			$(SRC_FOLDER)ft_lstdelone.c \
+			$(SRC_FOLDER)ft_lstclear.c \
+			$(SRC_FOLDER)ft_lstiter.c
 
 SRCS_GNL	= $(GNL_SRC_FOLDER)get_next_line.c \
 				$(GNL_SRC_FOLDER)get_next_line_utils.c
@@ -100,7 +100,7 @@ $(NAME) : $(OBJS)
 re : fclean $(NAME)
 
 clean :
-		$(RM) $(OBJS)
+		$(RM) *.o $(SRC_FOLDER)*.o $(GNL_SRC_FOLDER)*.o $(PRINTF_SRC_FOLDER)*.o
 
 fclean : clean
 		$(RM) $(NAME)

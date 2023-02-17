@@ -1,44 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_power.c                                         :+:      :+:    :+:   */
+/*   ft_dlst_addfront.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/03 08:55:58 by nrossel           #+#    #+#             */
-/*   Updated: 2023/02/17 09:37:59 by nrossel          ###   ########.fr       */
+/*   Created: 2023/02/13 18:13:01 by nrossel           #+#    #+#             */
+/*   Updated: 2023/02/14 11:04:57 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
-int	ft_power(int nbr, unsigned int power)
+void	ft_dlst_addfront(t_dlist *lst, t_node *new)
 {
-	unsigned int	i;
-	long long		nb;
-
-	i = 0;
-	nb = (long long)nbr;
-	if (power == 0)
+	if (!new)
+		return ;
+	if (!lst)
 	{
-		if (nb < 0)
-			return (-1);
-		else
-			return (1);
+		lst->tail = new;
+		lst->head = new;
+		lst->len++;
+		return ;
 	}
-	else if (power == 1)
-		return (nb);
-	while (++i != power)
-		nb *= nbr;
-	if (nbr < 0)
-		nb = -nb;
-	return (nb);
+	else
+	{
+		lst->head->prev = new;
+		new->next = lst->head;
+		lst->head = new;
+		lst->len++;
+	}
 }
-
-// int main (int ac, char **av)
-// {
-	// (void) ac;
-	// int nbr = ft_power(atoi(av[1]), atoi(av[2]));
-	// ft_printf("%d", nbr);
-	// 
-// }

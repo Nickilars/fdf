@@ -6,12 +6,11 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 10:58:34 by nrossel           #+#    #+#             */
-/*   Updated: 2022/12/30 08:27:56 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/02/17 10:06:38 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ft_printf.h"
-
 
 int	ft_print_s(const char *str)
 {
