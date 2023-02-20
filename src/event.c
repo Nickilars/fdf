@@ -6,7 +6,7 @@
 /*   By: nrossel <nrossel@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 10:58:34 by nrossel           #+#    #+#             */
-/*   Updated: 2023/02/17 10:09:21 by nrossel          ###   ########.fr       */
+/*   Updated: 2023/02/20 16:33:18 by nrossel          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,6 @@ int	handle_keypress(int key, t_data *data)
 int	close_window(int key, t_data *data)
 {
 	(void) key;
-	free(data->mlx_ptr);
+	(void) data;
 	exit (0);
 }
